@@ -1,0 +1,10 @@
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\bin\Debug\NotificationService.dll.config
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\bin\Debug\NotificationService.dll
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\bin\Debug\NotificationService.pdb
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\bin\Debug\Microsoft.WindowsAzure.Diagnostics.dll
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\bin\Debug\MonAgentListener.dll
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\obj\Debug\NotificationService.csproj.AssemblyReference.cache
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\obj\Debug\NotificationService.csproj.CoreCompileInputs.cache
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\obj\Debug\NotificationService.csproj.CopyComplete
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\obj\Debug\NotificationService.dll
+C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\NotificationService\obj\Debug\NotificationService.pdb

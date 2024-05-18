@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<!-- Custom CSS for additional styling -->
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+    }
+
+    .btn-secondary {
+        margin-top: 10px;
+    }
+
+    .message {
+        margin-top: 20px;
+        color: red;
+        text-align: center;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-header">
+        <h2>Login</h2>
+    </div>
+    <form asp-action="Login" method="post">
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input type="email" class="form-control" name="email" placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input type="password" class="form-control" name="password" placeholder="Enter your password" />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <p>
+                @Html.ActionLink("Register", "Register", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+            </p>
+        </div>
+        <div class="message">
+            @ViewBag.Message
+        </div>
+    </form>
+</div>

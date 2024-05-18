@@ -1,0 +1,15 @@
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Emulator config file set to C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] DiagnosticsStoreRootPath set to: C:\Users\Lazar\AppData\Local\dftmp\Resources\3d16478c-36c3-447b-94cf-48465ee2b032
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Loading config file: C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Config file to read: C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Checking VM Type
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Emulator config file set to C:\Users\Lazar\Desktop\ProjekatCloud\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Extension set to Emulator Mode
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Reading XML configuration file
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Bypassing private config decryption
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Stopping the running plugin, if any
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] No DiagnosticsPlugin is running.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Killing any DiagnosticsPlugin that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Killing any MonAgentHost that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Diagnostics plugin stopped successfully
+DiagnosticsPluginLauncher.exe Information: 0 : [5/18/2024 3:50:37 PM] Resetting DiagnosticPlugin
