@@ -5,3 +5,9 @@
 
 <h2>Login Successful</h2>
 <p>Welcome back, @Model.FirstName @Model.LastName!</p>
+<p>
+    @Html.ActionLink("ViewProfile", "ViewProfile", "Profile", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+</p>
+<p>
+    @Html.ActionLink("CreatePost", "CreatePost", "Post", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+</p>

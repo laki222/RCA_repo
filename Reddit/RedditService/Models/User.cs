@@ -8,6 +8,9 @@ namespace RedditService.Models
 {
     public class User
     {
+
+        public User() { }
+
         [Required]
         public string FirstName { get; set; }
 

@@ -1,0 +1,14 @@
+﻿@model RedditService.Models.PostEntity
+@{
+    ViewBag.Title = "Posting Successful";
+}
+
+<h2>Post published successfuly</h2>
+<p>@Model.Title is successfuly posted!</p>
+<p>
+    @Html.ActionLink("ViewProfile", "ViewProfile", "Profile", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+</p>
+<p>
+    @Html.ActionLink("CreatePost", "CreatePost", "Post", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+</p>
+

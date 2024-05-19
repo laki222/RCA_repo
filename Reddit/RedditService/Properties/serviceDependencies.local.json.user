@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2024-05-18T19:46:51.4966978Z"
+    },
+    "storage1": {
+      "restored": true,
+      "restoreTime": "2024-05-18T19:48:14.4592741Z"
+    }
+  },
+  "parameters": {
+    "storage1.resourceGroupName": {
+      "Name": "storage1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "Storage"
+    },
+    "storage1.subscriptionId": {
+      "Name": "storage1.subscriptionId",
+      "Type": "subscription",
+      "Value": "97197015-c449-486d-b0bc-5702eeb3ac01"
+    }
+  }
+}

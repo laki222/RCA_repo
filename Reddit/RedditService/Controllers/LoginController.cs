@@ -39,10 +39,12 @@ namespace RedditService.Controllers
             {
                 this.Session["UserProfile"] = user;
                 return View("Success", user);
+                //return RedirectToAction("ViewProfile", "Profile");
+
             }
 
             ModelState.AddModelError(string.Empty, "Invalid email or password.");
-            return View();
+            return View(user);
         }
     }
         

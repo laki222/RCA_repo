@@ -1,0 +1,22 @@
+﻿@model RedditService.Models.User
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>User Profile</h1>
+    <p>First Name: @Model.FirstName</p>
+    <p>Last Name: @Model.LastName</p>
+    <p>Address: @Model.Address</p>
+    <p>City: @Model.City</p>
+    <p>Country: @Model.Country</p>
+    <p>Email: @Model.Email</p>
+    <p>Phone Number: @Model.PhoneNumber</p>
+    <p>Image URL: @Model.ImageUrl</p>
+    <!-- Display the image using the URL from Azure Blob Storage -->
+    <img src="@Model.ImageUrl" alt="User Image" />
+    <a asp-action="EditProfile" class="btn btn-primary">Edit Profile</a>
+</body>
+</html>
