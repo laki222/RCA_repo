@@ -49,8 +49,8 @@ namespace RedditService.Controllers
                     // Save image to Blob storage
 
                     // Retrieve the currently logged-in user
-                    string email = "";
-                    var currentUser = await _userDataRepository.GetUserByEmailAsync(email); // You need to implement this method
+                    UserEntity user = Session["UserProfile"] as UserEntity;
+                    var currentUser = await _userDataRepository.GetUserByEmailAsync(user.RowKey); // You need to implement this method
 
                     // Create a PostEntity from the model
                     var postEntity = new PostEntity(currentUser)

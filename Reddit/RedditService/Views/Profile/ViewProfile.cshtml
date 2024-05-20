@@ -1,4 +1,4 @@
-﻿@model RedditService.Models.User
+﻿@model RedditService.Models.UserEntity
 
 <!DOCTYPE html>
 <html>
@@ -12,11 +12,20 @@
     <p>Address: @Model.Address</p>
     <p>City: @Model.City</p>
     <p>Country: @Model.Country</p>
-    <p>Email: @Model.Email</p>
+    <p>Email: @Model.RowKey</p>
     <p>Phone Number: @Model.PhoneNumber</p>
-    <p>Image URL: @Model.ImageUrl</p>
     <!-- Display the image using the URL from Azure Blob Storage -->
-    <img src="@Model.ImageUrl" alt="User Image" />
-    <a asp-action="EditProfile" class="btn btn-primary">Edit Profile</a>
+    <div class="profile-container">
+        <div class="profile-image">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Profile Image" class="img-thumbnail" />
+            }
+          
+        </div>
+        </div>
+        <p>
+            @Html.ActionLink("EditProfile", "EditProfile", "Profile", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+        </p>
 </body>
 </html>

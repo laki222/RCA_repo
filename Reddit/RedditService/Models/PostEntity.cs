@@ -8,11 +8,11 @@ namespace RedditService.Models
 {
     public class PostEntity : TableEntity
     {
-        public PostEntity(User user)
+        public PostEntity(UserEntity user)
         {
             this.PartitionKey = "Posts";
             this.RowKey = Guid.NewGuid().ToString();
-            this.AuthorEmail = user.Email; // Set AuthorEmail to user's email
+            this.AuthorEmail = user.RowKey; // Set AuthorEmail to user's email
         }
 
         public PostEntity() { }

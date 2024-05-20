@@ -1,0 +1,10 @@
+﻿@model RedditService.Models.UserEntity
+@{
+    ViewBag.Title = "Posting Successful";
+}
+
+<h2>User @Model.LastName updated successfuly</h2>
+<p>
+    @Html.ActionLink("ViewProfile", "ViewProfile", "Profile", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+</p>
+

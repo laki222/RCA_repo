@@ -27,87 +27,29 @@ namespace RedditService.Controllers
             var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
            // var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             var blobClient = storageAccount.CreateCloudBlobClient();
-            _blobContainer = blobClient.GetContainerReference("profileimages");
+            _blobContainer = blobClient.GetContainerReference("userimages");
             _blobContainer.CreateIfNotExistsAsync().Wait();
+            _blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }).Wait();
         }
 
-        /*
-        public async Task<ActionResult> FetchUserByEmail(string email)
-        {
-            try
-            {
-                var user = await _userRepository.GetUserAsync(email);
-
-                if(user != null)
-                {
-                    Session["User"] = user;
-
-                    return RedirectToAction("ViewProfile");
-                }
-                else
-                {
-                    ViewBag.Message = "UserNotFound";
-                    return View("Error");
-                }
-            }catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return View("Error");
-            }
-        }
-        public ActionResult ViewProfile()
-        {
-            var user = Session["User"] as User;
-            //this.Session["UserProfile"] = user;
-            if (user != null)
-            {
-                return View(user);
-            }
-            else
-            {
-                // Redirect to another action if user is null
-                return RedirectToAction("UserNotFound");
-            }
-        }
-        */
-
-        [HttpPost]
-        public async Task<ActionResult> GetUserProfile(string email)
-        {
-            try
-            {
-                var user = await _userRepository.GetUserAsync(email);
-
-                if (user != null)
-                {
-                    //var user = userEntity.ToUser();
-                    this.Session["User"] = user;
-                    Console.WriteLine("User set in session: ");
-
-                    return RedirectToAction("ViewProfile");
-                }
-                else
-                {
-                    ViewBag.Message = "UserNotFound";
-                    return View("Error");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message);
-                return View("Error");
-            }
-        }
-
+      
         [HttpGet]
-        public async Task<ActionResult> ViewProfile(string email)
+        public async Task<ActionResult> ViewProfile()
         {
-            var user = await _userRepository.GetUserByEmailAsync(email);
-            //this.Session["UserProfile"] = user;
+            await Task.Delay(100);
+            var user = this.Session["UserProfile"] as UserEntity;
+           
 
             if (user != null)
             {
-                this.Session["User"] = user;
+                if (!string.IsNullOrEmpty(user.ImageUrl))
+                {
+                    CloudBlockBlob blockBlob = new CloudBlockBlob(new Uri(user.ImageUrl), _blobContainer.ServiceClient.Credentials);
+                    if (await blockBlob.ExistsAsync())
+                    {
+                        user.ImageUrl = blockBlob.Uri.ToString();
+                    }
+                }
                 Console.WriteLine("User retrieved from session: ");
                 return View(user);
             }
@@ -117,81 +59,51 @@ namespace RedditService.Controllers
                 return RedirectToAction("UserNotFound");
             }
         }
-        public ActionResult UserNotFound()
-        {
-            // You can return a specific view or perform any other action here
-            return View("UserNotFound");
-        }
-        /*
+       
+     
         [HttpGet]
-        public async Task<ActionResult> ViewProfile(string email)
+        public async Task<ActionResult> EditProfile()
         {
-            //var userEmail = HttpContext.Session.GetString("UserEmail");
-            //var email = Session["UserProfile"].ToString();
-            var user = await _userRepository.GetUserByEmailAsync(email);
-            this.Session["UserProfile"] = user;
+            await Task.Delay(100);
+            var user = this.Session["UserProfile"];
             if (user != null)
             {
-                return View("ViewProfile", user);
-            }
-
-            //var user = await _userRepository.GetUserAsync(email);
-            //if (user == null)
-            //{
-                //return RedirectToAction("Login", "Login");
-            //}
-
-            return View(user);
-        }
-        */
-        [HttpGet]
-        public async Task<ActionResult> EditProfile(string email)
-        {
-            var user = await _userRepository.GetUserAsync(email);
-            this.Session["UserProfile"] = user;
-            if (user != null)
-            {
-                return RedirectToAction("EditProfile", "Profile");
+                return View("EditProfile",user);
             }
 
             //var user = await _userRepository.GetUserByEmailAsync(userEmail);
-            if (user == null)
+            else 
             {
                 return View("Login", user);
             }
 
-            return View(user);
+           
         }
 
-        /*
         [HttpPost]
-        public async Task<ActionResult> EditProfile(string email, string password)
+        public async Task<ActionResult> SaveProfile(UserEntity user)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    if (image != null)
-                    {
-                        // Save image to Blob storage
-                        var blobName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
-                        var blockBlob = _blobContainer.GetBlockBlobReference(blobName);
-                        await blockBlob.UploadFromStreamAsync(image.OpenReadStream());
-                        model.ImageUrl = blockBlob.Uri.ToString();
-                    }
+            await Task.Delay(100);
 
-                    await _userRepository.UpdateUserAsync(model);
-                    HttpContext.Session.SetString("UserImageUrl", model.ImageUrl ?? string.Empty);
-                    return RedirectToAction("ViewProfile");
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again later.");
-                }
+            var sesija = Session["UserProfile"] as UserEntity;
+
+            user.RowKey = sesija.RowKey;
+            user.Password= sesija.Password;
+
+            if (user != null) {
+
+                _userRepository.UpdateUser(user);
+                Session["UserProfile"]=user;
+                return View("Success", user);
             }
-
-            return View(model);
+            else
+            {
+                Console.WriteLine("User not found in session.");
+                return RedirectToAction("UserNotFound");
+            }
         }
-        */
+
+
+
     }
 }

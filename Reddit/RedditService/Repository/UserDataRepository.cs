@@ -57,7 +57,7 @@ namespace RedditService.Repository
            
         }
         
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<UserEntity> GetUserByEmailAsync(string email)
         {
             try
             {
@@ -73,19 +73,7 @@ namespace RedditService.Repository
                 if (userEntity != null)
                 {
                     // Map the UserEntity to User model
-                    return new User
-                    {
-                        //Email = userEntity.RowKey, // Email is the RowKey
-                        FirstName = userEntity.FirstName,
-                        LastName = userEntity.LastName,
-                        Address = userEntity.Address,
-                        City = userEntity.City,
-                        Country = userEntity.Country,
-                        Email = userEntity.RowKey,
-                        PhoneNumber = userEntity.PhoneNumber,
-                        //Image = userEntity.,
-                        ImageUrl = userEntity.ImageUrl
-                    };
+                    return userEntity;
                 }
                 else
                 {

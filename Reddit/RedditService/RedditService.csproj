@@ -396,6 +396,7 @@
     <Content Include="Views\Profile\EditProfile.cshtml" />
     <Content Include="Views\Post\CreatePost.cshtml" />
     <Content Include="Views\Post\Success.cshtml" />
+    <Content Include="Views\Profile\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

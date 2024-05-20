@@ -37,7 +37,7 @@ namespace RedditService.Controllers
 
             if (user != null && user.Password == password) // Ensure passwords are hashed and compared securely in real applications
             {
-                this.Session["UserProfile"] = user;
+                Session["UserProfile"] = user;
                 return View("Success", user);
                 //return RedirectToAction("ViewProfile", "Profile");
 
