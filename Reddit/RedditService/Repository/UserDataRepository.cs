@@ -114,7 +114,21 @@ namespace RedditService.Repository
 
         public void UpdateUser(UserEntity user)
         {
-            TableOperation updateOperation = TableOperation.Replace(user);
+            var temp = GetUser(user.RowKey);
+
+            if (!string.IsNullOrEmpty(user.ImageUrl))
+            {
+                temp.ImageUrl = user.ImageUrl;
+            }
+
+            temp.FirstName = user.FirstName;
+            temp.LastName = user.LastName;
+            temp.Address = user.Address;
+            temp.City = user.City;
+            temp.Country = user.Country;
+            temp.PhoneNumber = user.PhoneNumber;
+
+            TableOperation updateOperation = TableOperation.Replace(temp);
             _table.Execute(updateOperation);
         }
     }

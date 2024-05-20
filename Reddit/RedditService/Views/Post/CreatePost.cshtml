@@ -6,16 +6,24 @@
 
 <h2>Create Post</h2>
 
-<form asp-action="CreatePost" method="post" enctype="multipart/form-data">
+@using (Html.BeginForm("CreatePost", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     <div class="form-group">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        <label asp-for="Content"></label>
-        <textarea asp-for="Content" class="form-control"></textarea>
+        @Html.LabelFor(m => m.Content)
+        @Html.TextAreaFor(m => m.Content, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ImageUrl)
+        <input type="file" id="ImageUrl" name="ImageUrl" class="form-control" />
+        @Html.ValidationMessageFor(m => m.ImageUrl, "", new { @class = "text-danger" })
     </div>
     <button type="submit" class="btn btn-primary">Create Post</button>
-</form>
+}
 
 

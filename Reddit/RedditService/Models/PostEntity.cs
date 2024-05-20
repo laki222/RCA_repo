@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -20,6 +21,7 @@ namespace RedditService.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public string AuthorEmail { get; set; }
+        public HttpPostedFileBase Image { get; set; }
         public string ImageUrl { get; set; }
         public List<string> CommentId { get; set; } 
         public int Upvotes { get; set; }

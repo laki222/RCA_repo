@@ -18,7 +18,7 @@ namespace RedditService.Controllers
         private readonly PostRepository _postRepository;
         private readonly UserDataRepository _userDataRepository;
         private CloudBlobContainer blobContainer;
-        private CloudStorageAccount storageAccount;
+        //private CloudStorageAccount storageAccount;
 
         public PostController()
         {

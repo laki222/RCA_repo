@@ -27,3 +27,13 @@ C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthMonitoringService\obj\Debug\HealthM
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthMonitoringService\obj\Debug\HealthMonitoringService.csproj.CopyComplete
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthMonitoringService\obj\Debug\HealthMonitoringService.dll
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthMonitoringService\obj\Debug\HealthMonitoringService.pdb
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\bin\Debug\HealthMonitoringService.dll.config
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\bin\Debug\HealthMonitoringService.dll
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\bin\Debug\HealthMonitoringService.pdb
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\bin\Debug\Microsoft.WindowsAzure.Diagnostics.dll
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\bin\Debug\MonAgentListener.dll
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\obj\Debug\HealthMonitoringService.csproj.AssemblyReference.cache
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\obj\Debug\HealthMonitoringService.csproj.CoreCompileInputs.cache
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\obj\Debug\HealthMonitoringService.csproj.CopyComplete
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\obj\Debug\HealthMonitoringService.dll
+C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\HealthMonitoringService\obj\Debug\HealthMonitoringService.pdb
