@@ -38,7 +38,7 @@ namespace RedditService.Controllers
         {
             await Task.Delay(100);
             var user = this.Session["UserProfile"] as UserEntity;
-           
+            ViewBag.IsUserLoggedIn = "true";
 
             if (user != null)
             {
@@ -65,6 +65,7 @@ namespace RedditService.Controllers
         public async Task<ActionResult> EditProfile()
         {
             await Task.Delay(100);
+            ViewBag.IsUserLoggedIn = "true";
             var user = this.Session["UserProfile"];
             if (user != null)
             {
@@ -84,7 +85,7 @@ namespace RedditService.Controllers
         public async Task<ActionResult> SaveProfile(UserEntity user)
         {
             await Task.Delay(100);
-
+            ViewBag.IsUserLoggedIn = "true";
             var sesija = Session["UserProfile"] as UserEntity;
 
             user.RowKey = sesija.RowKey;

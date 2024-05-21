@@ -1,0 +1,47 @@
+﻿@{
+    List<RedditService.Models.PostEntity> posts = ViewBag.Posts;
+}
+
+<script src="https://use.fontawesome.com/2903eb4599.js"></script>
+
+<link href="~/Content/Feed.css" rel="stylesheet" type="text/css" />
+
+<div class="card-list">
+    @foreach (var p in posts)
+    {
+        <article class="card">
+            <figure class="card-image">
+                <img src="@p.Image" alt="@p.Title" />
+            </figure>
+            <div class="card-header">
+                <a href="#">@p.Title</a>
+            </div>
+
+            <p>@p.Content</p>
+            <div class="card-footer">
+                <div class="card-meta card-meta--views">
+                    <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
+                        <input type="hidden" name="postId" value="@p.Id" />
+                        <input type="hidden" name="isUpvote" value="true" />
+                        <a href="#" class="like" onclick="this.closest('form').submit(); return false;">
+                            <i class="fa fa-thumbs-o-up"></i>
+                            <input class="qty1" name="qty1" type="text" value="@p.Upvotes" readonly />
+                        </a>
+                    </form>
+
+                    <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
+                        <input type="hidden" name="postId" value="@p.Id" />
+                        <input type="hidden" name="isUpvote" value="false" />
+                        <a href="#" class="like" onclick="this.closest('form').submit(); return false;">
+                            <i class="fa fa-thumbs-o-down"></i>
+                            <input class="qty1" name="qty1" type="text" value="@p.Downvotes" readonly />
+                        </a>
+                    </form>
+                </div>
+                <div class="card-meta card-meta--date">
+                    <!-- Možete dodati datum ovde -->
+                </div>
+            </div>
+        </article>
+    }
+</div>

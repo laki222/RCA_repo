@@ -47,7 +47,7 @@ namespace RedditService.Controllers
                 try
                 {
                     // Save image to Blob storage
-
+                    ViewBag.IsUserLoggedIn = "true";
                     // Retrieve the currently logged-in user
                     UserEntity user = Session["UserProfile"] as UserEntity;
                     var currentUser = await _userDataRepository.GetUserByEmailAsync(user.RowKey); // You need to implement this method
@@ -55,6 +55,7 @@ namespace RedditService.Controllers
                     // Create a PostEntity from the model
                     var postEntity = new PostEntity(currentUser)
                     {
+                        Id = 100,
                         Title = model.Title,
                         Content = model.Content,
                         ImageUrl = model.ImageUrl,

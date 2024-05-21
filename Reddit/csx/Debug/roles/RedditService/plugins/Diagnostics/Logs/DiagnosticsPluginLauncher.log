@@ -1,19 +1,15 @@
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:32 PM] At least one other instance of the launcher is running. Will wait until they all finish
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Service running in Emulator Mode, will not wait/kill other instances of the launcher
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Emulator config file set to C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] DiagnosticsStoreRootPath set to: C:\Users\Korisnik\AppData\Local\dftmp\Resources\84d7c4c0-09b6-4ab4-8dcb-1b3bcaf1ffe6
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Loading config file: C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Config file to read: C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Checking VM Type
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Emulator config file set to C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Extension set to Emulator Mode
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Reading XML configuration file
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Bypassing private config decryption
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:33 PM] Stopping the running plugin, if any
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:34 PM] No DiagnosticsPlugin is running.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:34 PM] Killing any DiagnosticsPlugin that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:35 PM] Killing any MonAgentHost that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:35 PM] Diagnostics plugin stopped successfully
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:03:35 PM] Resetting DiagnosticPlugin
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:04:48 PM] DiagnosticsPlugin launched successfully with new configuration
-DiagnosticsPluginLauncher.exe Information: 0 : [5/20/2024 8:04:48 PM] DiagnosticPlugin exited with code 0
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Emulator config file set to C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] DiagnosticsStoreRootPath set to: C:\Users\Lazar\AppData\Local\dftmp\Resources\c39894f7-4d2f-4e1a-944b-5d034c3cfa59
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Loading config file: C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Config file to read: C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Checking VM Type
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Emulator config file set to C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\RedditService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Extension set to Emulator Mode
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Reading XML configuration file
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Bypassing private config decryption
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Stopping the running plugin, if any
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] No DiagnosticsPlugin is running.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] Killing any DiagnosticsPlugin that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] Killing any MonAgentHost that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] Diagnostics plugin stopped successfully
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] Resetting DiagnosticPlugin

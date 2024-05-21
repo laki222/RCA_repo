@@ -10,21 +10,35 @@ namespace RedditService.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
+            
+            var user = Session["UserProfile"];
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            if (user != null)
+            {
+                ViewBag.IsUserLoggedIn= "true";
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+           
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            var user = Session["UserProfile"];
 
-            return View();
+            if (user != null)
+            {
+                ViewBag.IsUserLoggedIn = "true";
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
 

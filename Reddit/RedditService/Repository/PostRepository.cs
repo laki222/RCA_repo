@@ -23,15 +23,24 @@ namespace RedditService.Repository
             _table = tableClient.GetTableReference("Posts"); _table.CreateIfNotExists();
         }
 
+        public IQueryable<PostEntity> RetrieveAllPosts()
+        {
+            var results = from g in _table.CreateQuery<PostEntity>()
+                          where g.PartitionKey == "Posts"
+                          select g;
+            return results;
+        }
+
         public async Task AddPostAsync(PostEntity post)
         {
             var insertOperation = TableOperation.Insert(post);
             await _table.ExecuteAsync(insertOperation);
         }
 
-        public async Task<PostEntity> GetPostAsync(string postId)
+        public async Task<PostEntity> GetPostAsync(int postId)
         {
-            var retrieveOperation = TableOperation.Retrieve<PostEntity>("Post", postId);
+
+            var retrieveOperation = TableOperation.Retrieve<PostEntity>("Posts", postId.ToString());
             var result = await _table.ExecuteAsync(retrieveOperation);
             return result.Result as PostEntity;
         }
