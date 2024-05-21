@@ -5,6 +5,7 @@ using RedditService.Models;
 using RedditService.Repository;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,6 +48,13 @@ namespace RedditService.Controllers
                 try
                 {
                     // Save image to Blob storage
+                    var stopwatch = Stopwatch.StartNew();
+                    var blobName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
+                    var blockBlob = blobContainer.GetBlockBlobReference(blobName);
+                    await blockBlob.UploadFromStreamAsync(model.Image.InputStream);
+                    model.ImageUrl = blockBlob.Uri.ToString();
+                    stopwatch.Stop();
+
                     ViewBag.IsUserLoggedIn = "true";
                     // Retrieve the currently logged-in user
                     UserEntity user = Session["UserProfile"] as UserEntity;
@@ -55,7 +63,7 @@ namespace RedditService.Controllers
                     // Create a PostEntity from the model
                     var postEntity = new PostEntity(currentUser)
                     {
-                        Id = 100,
+                        //Id = model.RowKey,
                         Title = model.Title,
                         Content = model.Content,
                         ImageUrl = model.ImageUrl,

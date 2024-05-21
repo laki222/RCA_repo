@@ -11,7 +11,7 @@
     {
         <article class="card">
             <figure class="card-image">
-                <img src="@p.Image" alt="@p.Title" />
+                <img src="@p.ImageUrl" alt="@p.Title" />
             </figure>
             <div class="card-header">
                 <a href="#">@p.Title</a>
@@ -21,7 +21,7 @@
             <div class="card-footer">
                 <div class="card-meta card-meta--views">
                     <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
-                        <input type="hidden" name="postId" value="@p.Id" />
+                        <input type="hidden" name="rowkey" value="@p.RowKey" />
                         <input type="hidden" name="isUpvote" value="true" />
                         <a href="#" class="like" onclick="this.closest('form').submit(); return false;">
                             <i class="fa fa-thumbs-o-up"></i>
@@ -30,7 +30,7 @@
                     </form>
 
                     <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
-                        <input type="hidden" name="postId" value="@p.Id" />
+                        <input type="hidden" name="rowkey" value="@p.RowKey" />
                         <input type="hidden" name="isUpvote" value="false" />
                         <a href="#" class="like" onclick="this.closest('form').submit(); return false;">
                             <i class="fa fa-thumbs-o-down"></i>

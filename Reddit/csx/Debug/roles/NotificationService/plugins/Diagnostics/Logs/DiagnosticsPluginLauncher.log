@@ -1,17 +1,16 @@
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] At least one other instance of the launcher is running. Will wait until they all finish
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Service running in Emulator Mode, will not wait/kill other instances of the launcher
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Emulator config file set to C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\NotificationService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] DiagnosticsStoreRootPath set to: C:\Users\Lazar\AppData\Local\dftmp\Resources\c0b12112-3eaf-4ba6-98ed-f1432b6ffab7
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Loading config file: C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\NotificationService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Config file to read: C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\NotificationService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Checking VM Type
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Emulator config file set to C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\NotificationService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Extension set to Emulator Mode
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Reading XML configuration file
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Bypassing private config decryption
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:22 PM] Stopping the running plugin, if any
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] No DiagnosticsPlugin is running.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] Killing any DiagnosticsPlugin that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] Killing any MonAgentHost that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] Diagnostics plugin stopped successfully
-DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 8:29:23 PM] Resetting DiagnosticPlugin
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] At least one other instance of the launcher is running. Will wait until they all finish
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Service running in Emulator Mode, will not wait/kill other instances of the launcher
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Emulator config file set to C:\Users\Korisnik\Desktop\RCA\Reddit\csx\Debug\roles\NotificationService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] DiagnosticsStoreRootPath set to: C:\Users\Korisnik\AppData\Local\dftmp\Resources\572008d5-3958-4794-851c-ef96532c45d3
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Loading config file: C:\Users\Korisnik\Desktop\RCA\Reddit\csx\Debug\roles\NotificationService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Config file to read: C:\Users\Korisnik\Desktop\RCA\Reddit\csx\Debug\roles\NotificationService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Checking VM Type
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Emulator config file set to C:\Users\Korisnik\Desktop\RCA\Reddit\csx\Debug\roles\NotificationService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Extension set to Emulator Mode
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Reading XML configuration file
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Bypassing private config decryption
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:29 PM] Stopping the running plugin, if any
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:30 PM] Found a MonAgentHost.exe. WadArguments: "C:\Users\Korisnik\Desktop\RCA\Reddit\csx\Debug\roles\RedditService\plugins\Diagnostics\Monitor\x64\MonAgentHost.exe" -LocalPath "C:\Users\Korisnik\AppData\Local\dftmp\Resources\260e5587-a914-42a8-a4ab-7b1bfd7b55a5\WAD0105"  -ConfigFile "C:\Users\Korisnik\AppData\Local\dftmp\Resources\260e5587-a914-42a8-a4ab-7b1bfd7b55a5\WAD0105\Configuration\MaConfig.xml" -ShutDownEvent WADDM-ShutDown-005849ae67ec48ca86d57af9d32e275a  -TotalShutDownEvent WADDM-TotalShutDown-005849ae67ec48ca86d57af9d32e275a -InitializedEvent WADM-StartUp-005849ae67ec48ca86d57af9d32e275a -parent 13352 -events -wadVer1v5 -UseProxyServer -XStoreAccounts WadAccount#true#devstoreaccount1#Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==#http://127.0.0.1:10002#http://127.0.0.1:10001#http://127.0.0.1:10000.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:30 PM] Found a MonAgentHost.exe. WadArguments: "C:\Users\Korisnik\Desktop\RCA\Reddit\csx\Debug\roles\HealthStatusService\plugins\Diagnostics\Monitor\x64\MonAgentHost.exe" -LocalPath "C:\Users\Korisnik\AppData\Local\dftmp\Resources\cb5607ef-7674-4f6f-850b-ab5be34c6fa7\WAD0105"  -ConfigFile "C:\Users\Korisnik\AppData\Local\dftmp\Resources\cb5607ef-7674-4f6f-850b-ab5be34c6fa7\WAD0105\Configuration\MaConfig.xml" -ShutDownEvent WADDM-ShutDown-7a3ce17427ac45b5b13f32d2a21196a1  -TotalShutDownEvent WADDM-TotalShutDown-7a3ce17427ac45b5b13f32d2a21196a1 -InitializedEvent WADM-StartUp-7a3ce17427ac45b5b13f32d2a21196a1 -parent 10052 -events -wadVer1v5 -UseProxyServer -XStoreAccounts WadAccount#true#devstoreaccount1#Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==#http://127.0.0.1:10002#http://127.0.0.1:10001#http://127.0.0.1:10000.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:30 PM] Found a DiagnosticsPlugin.exe. WadArguments: "C:\Users\Korisnik\Desktop\RCA\Reddit\csx\Debug\roles\RedditService\plugins\Diagnostics\DiagnosticsPlugin.exe" DiagnosticPlugin-ShutdownEvent DiagnosticPlugin-TotalShutdownEvent -wadVer1v5.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/21/2024 9:48:30 PM] Found a DiagnosticsPlugin.exe. WadArguments: "C:\Users\Korisnik\Desktop\RCA\Reddit\csx\Debug\roles\HealthStatusService\plugins\Diagnostics\DiagnosticsPlugin.exe" DiagnosticPlugin-ShutdownEvent DiagnosticPlugin-TotalShutdownEvent -wadVer1v5.

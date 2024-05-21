@@ -23,12 +23,20 @@ namespace RedditService.Repository
             _table = tableClient.GetTableReference("Posts"); _table.CreateIfNotExists();
         }
 
-        public IQueryable<PostEntity> RetrieveAllPosts()
+        public async Task<List<PostEntity>> RetrieveAllPosts()
         {
-            var results = from g in _table.CreateQuery<PostEntity>()
-                          where g.PartitionKey == "Posts"
-                          select g;
-            return results;
+            TableQuery<PostEntity> query = new TableQuery<PostEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Posts"));
+            List<PostEntity> entities = new List<PostEntity>();
+
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<PostEntity> resultSegment = await _table.ExecuteQuerySegmentedAsync(query, token);
+                token = resultSegment.ContinuationToken;
+                entities.AddRange(resultSegment.Results);
+            } while (token != null);
+
+            return  entities;
         }
 
         public async Task AddPostAsync(PostEntity post)
@@ -37,18 +45,27 @@ namespace RedditService.Repository
             await _table.ExecuteAsync(insertOperation);
         }
 
-        public async Task<PostEntity> GetPostAsync(int postId)
+        public async Task<PostEntity> GetPostAsync(string rowkey)
         {
 
-            var retrieveOperation = TableOperation.Retrieve<PostEntity>("Posts", postId.ToString());
+            var retrieveOperation = TableOperation.Retrieve<PostEntity>("Posts", rowkey);
             var result = await _table.ExecuteAsync(retrieveOperation);
             return result.Result as PostEntity;
+        }
+        public async Task<PostEntity> GetPost(string rowkey)
+        {
+            //return RetrieveAllPosts().Wait()(p => p.RowKey == rowkey).FirstOrDefault();
+
+            List<PostEntity> lista = await RetrieveAllPosts();
+            return lista.Find(p => p.RowKey == rowkey);
         }
 
         public async Task UpdatePostAsync(PostEntity post)
         {
-            var updateOperation = TableOperation.Replace(post);
-            await _table.ExecuteAsync(updateOperation);
+            await Task.Delay(100);
+
+            TableOperation updateOperation = TableOperation.Replace(post);
+            _table.Execute(updateOperation);
         }
     }
 }

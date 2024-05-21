@@ -37,3 +37,13 @@ C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\NotificationService\obj\Debug\Noti
 C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\NotificationService\obj\Debug\NotificationService.csproj.CopyComplete
 C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\NotificationService\obj\Debug\NotificationService.dll
 C:\Users\Korisnik\Desktop\RCA_projekat\Reddit\NotificationService\obj\Debug\NotificationService.pdb
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\bin\Debug\NotificationService.dll.config
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\bin\Debug\NotificationService.dll
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\bin\Debug\NotificationService.pdb
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\bin\Debug\Microsoft.WindowsAzure.Diagnostics.dll
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\bin\Debug\MonAgentListener.dll
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\obj\Debug\NotificationService.csproj.AssemblyReference.cache
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\obj\Debug\NotificationService.csproj.CoreCompileInputs.cache
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\obj\Debug\NotificationService.csproj.CopyComplete
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\obj\Debug\NotificationService.dll
+C:\Users\Korisnik\Desktop\RCA\Reddit\NotificationService\obj\Debug\NotificationService.pdb

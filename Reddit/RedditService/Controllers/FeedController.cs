@@ -15,7 +15,7 @@ namespace RedditService.Controllers
     public class FeedController : Controller
     {
         private readonly PostRepository _postRepository;
-        private CloudBlobContainer blobContainer;
+        private readonly CloudBlobContainer blobContainer;
         private readonly UserDataRepository _userDataRepository;
 
 
@@ -30,6 +30,7 @@ namespace RedditService.Controllers
             var blobClient = storageAccount.CreateCloudBlobClient();
             blobContainer = blobClient.GetContainerReference("postimages");
             blobContainer.CreateIfNotExists();
+            blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }).Wait();
 
 
         }
@@ -41,7 +42,7 @@ namespace RedditService.Controllers
             ViewBag.IsUserLoggedIn = "true";
             await Task.Delay(100);
             List<PostEntity> list = new List<PostEntity>();
-            list = _postRepository.RetrieveAllPosts().ToList();
+            list = await _postRepository.RetrieveAllPosts();
             ViewBag.Posts = list;   
 
 
@@ -49,21 +50,23 @@ namespace RedditService.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> LikePost(int postId, bool isUpvote)
+        public async Task<ActionResult> LikePost(string rowkey, bool isUpvote)
         {
             // Pretpostavimo da imate servis za upravljanje postovima
-            
+            UserEntity user = Session["UserProfile"] as UserEntity;
+
+            var post = await _postRepository.GetPostAsync(rowkey);
 
             if (isUpvote)
             {
-                var post= await _postRepository.GetPostAsync(postId);
-                post.Upvotes += 1;
+                post.Upvotes += 1;  
             }
-            else
-            {
-                var post=await _postRepository.GetPostAsync(postId);
-                post.Downvotes -= 1;
+            else if(!isUpvote )
+            {  
+                post.Downvotes += 1;
             }
+            await _postRepository.UpdatePostAsync(post);
+
 
             // Možete se vratiti na istu stranicu ili neku drugu stranicu
             return RedirectToAction("Index");
