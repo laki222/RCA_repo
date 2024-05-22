@@ -313,6 +313,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -400,6 +401,7 @@
     <Content Include="Views\Post\Success.cshtml" />
     <Content Include="Views\Profile\Success.cshtml" />
     <Content Include="Views\Feed\Index.cshtml" />
+    <Content Include="Views\Comment\Comment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

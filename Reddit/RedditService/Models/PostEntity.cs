@@ -23,6 +23,9 @@ namespace RedditService.Models
         public HttpPostedFileBase Image { get; set; }
         public string ImageUrl { get; set; }
         public List<string> CommentId { get; set; } 
+
+        public int NumComments { get; set; }
+
         public int Upvotes { get; set; }
         public int Downvotes { get; set; }
     }

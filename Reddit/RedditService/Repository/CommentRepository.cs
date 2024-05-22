@@ -19,10 +19,27 @@ namespace RedditService.Repository
         public CommentRepository()
         {
             var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
-            var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            var _storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             _table = tableClient.GetTableReference("Comments"); _table.CreateIfNotExists();
         }
+
+        public async Task<List<CommentEntity>> RetrieveAllComments()
+        {
+            TableQuery<CommentEntity> query = new TableQuery<CommentEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Comments"));
+            List<CommentEntity> entities = new List<CommentEntity>();
+
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<CommentEntity> resultSegment = await _table.ExecuteQuerySegmentedAsync(query, token);
+                token = resultSegment.ContinuationToken;
+                entities.AddRange(resultSegment.Results);
+            } while (token != null);
+
+            return entities;
+        }
+
 
         public async Task AddCommentAsync(CommentEntity comment)
         {

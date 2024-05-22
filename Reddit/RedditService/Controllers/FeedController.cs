@@ -17,13 +17,13 @@ namespace RedditService.Controllers
         private readonly PostRepository _postRepository;
         private readonly CloudBlobContainer blobContainer;
         private readonly UserDataRepository _userDataRepository;
-
+        private readonly CommentRepository _commentRepository;
 
 
         public FeedController() {
             _userDataRepository = new UserDataRepository();
             _postRepository = new PostRepository();
-
+            _commentRepository=new CommentRepository();
             var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
@@ -70,6 +70,64 @@ namespace RedditService.Controllers
 
             // Možete se vratiti na istu stranicu ili neku drugu stranicu
             return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> Comments(string rowkey)
+        {
+            ViewBag.IsUserLoggedIn = "true";
+            await Task.Delay(100);
+            List<CommentEntity> list = new List<CommentEntity>();
+            list = await _commentRepository.RetrieveAllComments();
+            List<PostEntity> listpost = new List<PostEntity>();
+            listpost = await _postRepository.RetrieveAllPosts();
+            ViewBag.Posts = listpost;
+            ViewBag.Comments = list;
+            ViewBag.ButtonClick = "clicked";
+           
+           
+
+
+            return View("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddComment(string postId, string content)
+        {
+            UserEntity test = Session["UserProfile"] as UserEntity;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // "1058daa9-9ad8-4a09-86d6-ce2463dfb98e
+                    var commentEntity = new CommentEntity()
+                    {
+                        PostId = postId,
+                        Content = content,
+                        AuthorEmail = test.RowKey
+                    };
+
+                    // Add the comment entity to the repository
+                    await _commentRepository.AddCommentAsync(commentEntity); 
+                    List<CommentEntity> list = new List<CommentEntity>();
+                    list = await _commentRepository.RetrieveAllComments();
+                    List<PostEntity> listpost = new List<PostEntity>();
+                    listpost = await _postRepository.RetrieveAllPosts();
+                    ViewBag.Posts = listpost;
+                    ViewBag.Comments = list;
+                    ViewBag.ButtonClick = "clicked";
+
+                    // Redirect to a page displaying the post or any other page
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    ModelState.AddModelError(string.Empty, "An error occurred while adding the comment.");
+                }
+            }
+            // If model state is not valid or if an error occurred, return to the view
+            return View();
         }
 
     }
