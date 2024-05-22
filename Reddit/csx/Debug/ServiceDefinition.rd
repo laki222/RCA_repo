@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Reddit" generation="1" functional="0" release="0" Id="fcff7e4b-a547-42f7-80cb-380c9a6f42f0" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Reddit" generation="1" functional="0" release="0" Id="ea081447-2715-45a2-bdab-97c0fdf93d29" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="RedditGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -214,14 +214,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="ec47fb3d-604b-4178-ac4e-799df3547bc4" ref="Microsoft.RedDog.Contract\ServiceContract\RedditContract@ServiceDefinition">
+    <implementation Id="a865608a-dfe5-4822-96ac-01d02b238c59" ref="Microsoft.RedDog.Contract\ServiceContract\RedditContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="a5ab5e4a-7cb4-44f1-af99-35a327a0f3ab" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="0dcb93f1-ea29-4bf0-b9e6-1de943a430eb" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/HealthStatusService:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="a905c874-f578-477a-861c-74a04f619056" ref="Microsoft.RedDog.Contract\Interface\RedditService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="4b276ec4-3b41-4c09-b738-08745c18d4dc" ref="Microsoft.RedDog.Contract\Interface\RedditService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/RedditService:Endpoint1" />
           </inPort>

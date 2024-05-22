@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Table;
 using RedditService.Models;
 using RedditService.Repository;
 using System;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace RedditService.Controllers
 {
@@ -20,10 +22,11 @@ namespace RedditService.Controllers
         private readonly CommentRepository _commentRepository;
 
 
-        public FeedController() {
+        public FeedController()
+        {
             _userDataRepository = new UserDataRepository();
             _postRepository = new PostRepository();
-            _commentRepository=new CommentRepository();
+            _commentRepository = new CommentRepository();
             var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
@@ -43,7 +46,7 @@ namespace RedditService.Controllers
             await Task.Delay(100);
             List<PostEntity> list = new List<PostEntity>();
             list = await _postRepository.RetrieveAllPosts();
-            ViewBag.Posts = list;   
+            ViewBag.Posts = list;
 
 
             return View();
@@ -59,16 +62,16 @@ namespace RedditService.Controllers
 
             if (isUpvote)
             {
-                post.Upvotes += 1;  
+                post.Upvotes += 1;
             }
-            else if(!isUpvote )
-            {  
+            else if (!isUpvote)
+            {
                 post.Downvotes += 1;
             }
             await _postRepository.UpdatePostAsync(post);
 
 
-            // Možete se vratiti na istu stranicu ili neku drugu stranicu
+            // MoÅ¾ete se vratiti na istu stranicu ili neku drugu stranicu
             return RedirectToAction("Index");
         }
 
@@ -78,19 +81,32 @@ namespace RedditService.Controllers
         {
             ViewBag.IsUserLoggedIn = "true";
             await Task.Delay(100);
-            List<CommentEntity> list = new List<CommentEntity>();
-            list = await _commentRepository.RetrieveAllComments();
-            List<PostEntity> listpost = new List<PostEntity>();
-            listpost = await _postRepository.RetrieveAllPosts();
+
+            List<CommentEntity> list = await _commentRepository.RetrieveAllComments();
+            List<PostEntity> listpost = await _postRepository.RetrieveAllPosts();
+
             ViewBag.Posts = listpost;
             ViewBag.Comments = list;
-            ViewBag.ButtonClick = "clicked";
-           
-           
 
+            var previousRowKey = TempData["ClickedPostRowKey"] as string;
+
+            if (previousRowKey == rowkey)
+            {
+                ViewBag.ButtonClick = null;
+                ViewBag.ClickedPostRowKey = null;
+            }
+            else
+            {
+                ViewBag.ButtonClick = "clicked";
+                ViewBag.ClickedPostRowKey = rowkey;
+            }
+
+            TempData["ClickedPostRowKey"] = ViewBag.ClickedPostRowKey;
 
             return View("Index");
         }
+
+
         [HttpPost]
         public async Task<ActionResult> AddComment(string postId, string content)
         {
@@ -109,7 +125,7 @@ namespace RedditService.Controllers
                     };
 
                     // Add the comment entity to the repository
-                    await _commentRepository.AddCommentAsync(commentEntity); 
+                    await _commentRepository.AddCommentAsync(commentEntity);
                     List<CommentEntity> list = new List<CommentEntity>();
                     list = await _commentRepository.RetrieveAllComments();
                     List<PostEntity> listpost = new List<PostEntity>();
@@ -129,6 +145,81 @@ namespace RedditService.Controllers
             // If model state is not valid or if an error occurred, return to the view
             return View();
         }
+
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteComment(string commentId)
+        {
+            
+            var comment = await _commentRepository.GetComment(commentId);
+            await _commentRepository.DeleteCommentAsync(comment);
+
+            return RedirectToAction("Index");
+        }
+
+         [HttpGet]
+        public async Task<ActionResult> Search(string titleFilter)
+        {
+            ViewBag.IsUserLoggedIn = "true";
+            await Task.Delay(100);
+
+            List<CommentEntity> list = await _commentRepository.RetrieveAllComments();
+            List<PostEntity> listpost = await _postRepository.RetrieveAllPosts();
+
+          
+            ViewBag.Comments = list;
+
+
+            if (!string.IsNullOrEmpty(titleFilter))
+            {
+                // Filter the posts based on the title containing the input text
+                listpost = listpost.Where(p => p.Title.Contains(titleFilter)).ToList();
+            }
+
+            ViewBag.Posts = listpost;
+            ViewBag.Comments = await _commentRepository.RetrieveAllComments();
+
+            return View("Index");
+
+         
+        }
+        public async Task<ActionResult> Sort(string sortBy, string sortOrder)
+        {
+            ViewBag.IsUserLoggedIn = "true";
+            await Task.Delay(100);
+
+            List<PostEntity> posts = await _postRepository.RetrieveAllPosts();
+
+            if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(sortOrder))
+            {
+                posts = SortPosts(posts, sortBy, sortOrder);
+
+                // Toggle the sorting order for the next request
+                TempData["SortOrder"] = sortOrder == "ascending" ? "descending" : "ascending";
+            }
+
+            ViewBag.Posts = posts;
+
+            return View("Index");
+        }
+
+        private List<PostEntity> SortPosts(List<PostEntity> posts, string sortBy, string sortOrder)
+        {
+            switch (sortBy)
+            {
+                case "title":
+                    posts = sortOrder == "ascending" ? posts.OrderBy(p => p.Title).ToList() : posts.OrderByDescending(p => p.Title).ToList();
+                    break;
+                case "upvotes":
+                    posts = sortOrder == "ascending" ? posts.OrderBy(p => p.Upvotes).ToList() : posts.OrderByDescending(p => p.Upvotes).ToList();
+                    break;
+                    // Add more cases for other sorting criteria if needed
+            }
+
+            return posts;
+        }
+
+
 
     }
 }

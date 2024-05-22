@@ -13,19 +13,20 @@ namespace RedditService.Models
         {
             this.PartitionKey = "Comments";
             this.RowKey = Guid.NewGuid().ToString();
-            this.PostId = post.RowKey; 
+            this.PostId = post.RowKey;
 
         }
         public CommentEntity()
         {
             this.PartitionKey = "Comments";
             this.RowKey = Guid.NewGuid().ToString();
-          
+
         }
 
         public string Id { get; set; }
         public string PostId { get; set; }
         public string Content { get; set; }
         public string AuthorEmail { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

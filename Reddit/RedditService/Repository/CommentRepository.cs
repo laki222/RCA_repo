@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Services.Description;
 
 namespace RedditService.Repository
 {
-    public class CommentRepository { 
+    public class CommentRepository
+    {
 
 
         private CloudStorageAccount _storageAccount;
@@ -45,6 +47,24 @@ namespace RedditService.Repository
         {
             var insertOperation = TableOperation.Insert(comment);
             await _table.ExecuteAsync(insertOperation);
+        }
+
+        public async Task DeleteCommentAsync(CommentEntity comment)
+        {
+            await Task.Delay(100);
+
+            comment.IsDeleted = true;
+
+            TableOperation updateOperation = TableOperation.Replace(comment);
+            _table.Execute(updateOperation);
+        }
+
+        public async Task<CommentEntity> GetComment(string commId)
+        {
+            //return RetrieveAllPosts().Wait()(p => p.RowKey == rowkey).FirstOrDefault();
+
+            List<CommentEntity> lista = await RetrieveAllComments();
+            return lista.Find(c => c.RowKey == commId);
         }
     }
 }
