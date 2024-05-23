@@ -7,50 +7,59 @@
 <h2>Edit Profile</h2>
 @using (Html.BeginForm("SaveProfile", "Profile", FormMethod.Post))
 {
-   
-    <form asp-action="SaveProfile" method="post">
-        <div class="form-group">
-            <label asp-for="Firstname"></label>
-            <input name="Firstname" class="form-control" value="@Model.FirstName" />
-            <span asp-validation-for="Firstname" class="text-danger"></span>
+
+<form asp-action="SaveProfile" method="post">
+    <div class="form-group">
+        <label asp-for="Firstname"></label>
+        <input name="Firstname" class="form-control" value="@Model.FirstName" />
+        <span asp-validation-for="Firstname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lastname"></label>
+        <input name="Lastname" class="form-control" value="@Model.LastName" />
+        <span asp-validation-for="Lastname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input name="Email" class="form-control" readonly value="@Model.RowKey" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input name="Address" class="form-control" value="@Model.Address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="City"></label>
+        <input name="City" class="form-control" value="@Model.City" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Country"></label>
+        <input name="Country" class="form-control" value="@Model.Country" />
+        <span asp-validation-for="Country" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber"></label>
+        <input name="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 profile-image-container">
+        <!-- Display the image using the URL from Azure Blob Storage -->
+        <div class="profile-image">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Profile Image" class="img-thumbnail" />
+            }
         </div>
-        <div class="form-group">
-            <label asp-for="Lastname"></label>
-            <input name="Lastname" class="form-control" value="@Model.LastName" />
-            <span asp-validation-for="Lastname" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Email"></label>
-            <input name="Email" class="form-control" readonly value="@Model.RowKey" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Address"></label>
-            <input name="Address" class="form-control" value="@Model.Address" />
-            <span asp-validation-for="Address" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="City"></label>
-            <input name="City" class="form-control" value="@Model.City" />
-            <span asp-validation-for="City" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Country"></label>
-            <input name="Country" class="form-control" value="@Model.Country" />
-            <span asp-validation-for="Country" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="PhoneNumber"></label>
-            <input name="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Image"></label>
-            <input name="Image" type="file" class="form-control" value="@Model.ImageUrl" />
-            <span asp-validation-for="Image" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
-        </div>
-    </form>
+    </div>
+    <div class="form-group">
+        <label asp-for="Image"></label>
+        <input name="Image" type="file" class="form-control" value="@Model.ImageUrl" />
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
 }

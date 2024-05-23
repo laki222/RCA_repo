@@ -4,28 +4,56 @@
 <html>
 <head>
     <title>User Profile</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/UserProfile.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <h1>User Profile</h1>
-    <p>First Name: @Model.FirstName</p>
-    <p>Last Name: @Model.LastName</p>
-    <p>Address: @Model.Address</p>
-    <p>City: @Model.City</p>
-    <p>Country: @Model.Country</p>
-    <p>Email: @Model.RowKey</p>
-    <p>Phone Number: @Model.PhoneNumber</p>
-    <!-- Display the image using the URL from Azure Blob Storage -->
-    <div class="profile-container">
-        <div class="profile-image">
-            @if (!string.IsNullOrEmpty(Model.ImageUrl))
-            {
-                <img src="@Model.ImageUrl" alt="Profile Image" class="img-thumbnail" />
-            }
-          
-        </div>
+    <div class="container">
+        <h1>User Profile</h1>
+        <div class="row">
+            <div class="col-md-6 profile-fields">
+                <div class="profile-field">
+                    <label>First Name:</label>
+                    <span>@Model.FirstName</span>
+                </div>
+                <div class="profile-field">
+                    <label>Last Name:</label>
+                    <span>@Model.LastName</span>
+                </div>
+                <div class="profile-field">
+                    <label>Address:</label>
+                    <span>@Model.Address</span>
+                </div>
+                <div class="profile-field">
+                    <label>City:</label>
+                    <span>@Model.City</span>
+                </div>
+                <div class="profile-field">
+                    <label>Country:</label>
+                    <span>@Model.Country</span>
+                </div>
+                <div class="profile-field">
+                    <label>Email:</label>
+                    <span>@Model.RowKey</span>
+                </div>
+                <div class="profile-field">
+                    <label>Phone Number:</label>
+                    <span>@Model.PhoneNumber</span>
+                </div>
+            </div>
+            <div class="col-md-6 profile-image-container">
+                <!-- Display the image using the URL from Azure Blob Storage -->
+                <div class="profile-image">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" alt="Profile Image" class="img-thumbnail" />
+                    }
+                </div>
+            </div>
         </div>
         <p>
-            @Html.ActionLink("EditProfile", "EditProfile", "Profile", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+            @Html.ActionLink("Edit Profile", "EditProfile", "Profile", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
         </p>
+    </div>
 </body>
 </html>

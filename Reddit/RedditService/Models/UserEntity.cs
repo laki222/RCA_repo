@@ -23,6 +23,7 @@ namespace RedditService.Models
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
+        public HttpPostedFileBase Image { get; set; }
         public string ImageUrl { get; set; }
 
     }

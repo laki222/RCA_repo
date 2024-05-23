@@ -1,0 +1,30 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Add custom styles for user profile page */
+/* Add custom styles for user profile page */
+.profile-fields {
+    padding-right: 20px; /* Adjust spacing */
+}
+
+.profile-field {
+    margin-bottom: 10px;
+}
+
+    .profile-field label {
+        font-weight: bold;
+    }
+
+.profile-image-container {
+    display: flex;
+    align-items: flex-start; /* Align the image container with the top of the fields */
+}
+
+.profile-image {
+    margin-top: 10px; /* Adjust margin for spacing */
+}
+
+    .profile-image img {
+        max-width: 100%; /* Ensure image fits container */
+        height: auto; /* Maintain aspect ratio */
+    }
+

@@ -91,6 +91,7 @@ namespace RedditService.Controllers
             user.RowKey = sesija.RowKey;
             user.Password= sesija.Password;
 
+
             if (user != null) {
 
                 _userRepository.UpdateUser(user);

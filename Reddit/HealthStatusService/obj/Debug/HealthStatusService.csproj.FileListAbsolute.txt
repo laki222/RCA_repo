@@ -479,7 +479,6 @@ C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\HealthStatusService\bi
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\HealthStatusService\bin\Newtonsoft.Json.xml
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\HealthStatusService\bin\Antlr3.Runtime.pdb
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\HealthStatusService\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\HealthStatusService\obj\Debug\HealthStatusService.csproj.AssemblyReference.cache
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\HealthStatusService\obj\Debug\HealthStatusService.csproj.CoreCompileInputs.cache
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\HealthStatusService\obj\Debug\HealthStatusService.csproj.CopyComplete
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\HealthStatusService\obj\Debug\HealthStatusService.dll

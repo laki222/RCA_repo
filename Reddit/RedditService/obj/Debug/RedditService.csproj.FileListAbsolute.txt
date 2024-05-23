@@ -1147,7 +1147,6 @@ C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\RedditService\bin\Syst
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\RedditService\bin\Newtonsoft.Json.xml
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\RedditService\bin\Antlr3.Runtime.pdb
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\RedditService\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\RedditService\obj\Debug\RedditService.csproj.AssemblyReference.cache
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\RedditService\obj\Debug\RedditService.Properties.Resources.resources
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\RedditService\obj\Debug\RedditService.csproj.GenerateResource.cache
 C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\RedditService\obj\Debug\RedditService.csproj.CoreCompileInputs.cache
