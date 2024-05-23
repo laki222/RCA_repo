@@ -41,18 +41,29 @@ namespace RedditService.Controllers
 
         // GET: Feed
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int page = 1, int pageSize = 3)
         {
             ViewBag.IsUserLoggedIn = "true";
             await Task.Delay(100);
-            List<PostEntity> list = new List<PostEntity>();
-            list = await _postRepository.RetrieveAllPosts();
-            ViewBag.Posts = list;
-            UserEntity test = Session["UserProfile"] as UserEntity;
 
-            ViewBag.EmailOwnerPost= test.RowKey;
+            // Retrieve all posts
+            List<PostEntity> list = await _postRepository.RetrieveAllPosts();
 
-            
+            // Get the current user's email
+            UserEntity currentUser = Session["UserProfile"] as UserEntity;
+            ViewBag.EmailOwnerPost = currentUser?.RowKey;
+
+            // Calculate total number of pages
+            int totalPosts = list.Count;
+            int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
+
+            // Get the posts for the current page
+            List<PostEntity> paginatedPosts = list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pass paginated posts, total pages, and current page to the view
+            ViewBag.PaginatedPosts = paginatedPosts;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
 
             return View();
         }
@@ -270,7 +281,10 @@ namespace RedditService.Controllers
             return posts;
         }
 
-
+        public ActionResult ShowCreatePost()
+        {
+            return PartialView("_CreatePostPartial");
+        }
 
     }
 }

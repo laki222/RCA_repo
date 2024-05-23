@@ -12,6 +12,16 @@
 
 <link href="~/Content/Feed.css" rel="stylesheet" type="text/css" />
 
+<div style="position: relative;">
+    <div id="createPostContainer">
+        @Html.Partial("_CreatePostPartial")
+    </div>
+    <!-- Button to toggle visibility of the create post view -->
+    <a id="toggleCreatePostButton" class="create-post-button" href="#createPostContainer" asp-action="ShowCreatePost">
+        <i class="fa fa-plus"></i> Create Post
+    </a>
+
+</div>
 
 <h1>SEARCH</h1>
 <form action="@Url.Action("Search", "Feed")" method="get" style="display:inline;">
@@ -34,7 +44,7 @@
 
 
 <div class="card-list">
-    @foreach (var p in posts)
+    @foreach (var p in ViewBag.PaginatedPosts)
     {
         <article class="card">
             <figure class="card-image">
@@ -87,14 +97,15 @@
                         <div class="comment">
                             <h6>@c.AuthorEmail</h6>
                             <p>@c.Content</p>
-                            
-                            @if (p.AuthorEmail == EmailOwnerPost || c.AuthorEmail==EmailOwnerPost) { 
-                            <form action="@Url.Action("DeleteComment", "Feed")" method="post" style="display:inline;">
-                                <input type="hidden" name="commentId" value="@c.RowKey" />
-                                <button type="submit" class="delete-comment">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </form>
+
+                            @if (p.AuthorEmail == EmailOwnerPost || c.AuthorEmail == EmailOwnerPost)
+                            {
+                                <form action="@Url.Action("DeleteComment", "Feed")" method="post" style="display:inline;">
+                                    <input type="hidden" name="commentId" value="@c.RowKey" />
+                                    <button type="submit" class="delete-comment">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                             }
                         </div>
                     }
@@ -112,3 +123,15 @@
         </article>
     }
 </div>
+
+@if (ViewBag.TotalPages > 1)
+{
+    <div class="pagination-container">
+        <div class="pagination">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <a href="@Url.Action("Index", new { page = i })" class="@(ViewBag.CurrentPage == i ? "active" : "")">@i</a>
+            }
+        </div>
+    </div>
+}

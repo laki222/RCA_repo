@@ -1,0 +1,30 @@
+﻿@model RedditService.Models.PostEntity
+
+@{
+    ViewData["Title"] = "Create Post";
+}
+
+<h2>Create Post</h2>
+
+@using (Html.BeginForm("CreatePost", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Content)
+        @Html.TextAreaFor(m => m.Content, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Image)
+        @Html.TextBoxFor(m => m.Image, new { type = "file", @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">Create Post</button>
+}
+
+
+

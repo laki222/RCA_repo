@@ -39,7 +39,7 @@ namespace RedditService.Controllers
             {
                 ViewBag.IsUserLoggedIn = "true";
                 Session["UserProfile"] = user;
-                return View("Success", user);
+                return RedirectToAction("Index", "Feed");
                 //return RedirectToAction("ViewProfile", "Profile");
 
             }

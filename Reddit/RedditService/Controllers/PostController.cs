@@ -75,7 +75,7 @@ namespace RedditService.Controllers
                     // Add the post entity to Table storage using the repository
                     await _postRepository.AddPostAsync(postEntity);
 
-                    return View("Success", model);
+                    return RedirectToAction("Index", "Feed");
                 }
                 catch (Exception ex)
                 {
