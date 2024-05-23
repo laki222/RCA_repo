@@ -68,7 +68,8 @@ namespace RedditService.Controllers
                         Content = model.Content,
                         ImageUrl = model.ImageUrl,
                         Upvotes = 0,
-                        Downvotes = 0
+                        Downvotes = 0,
+                        IsDeleted = false,
                     };
 
                     // Add the post entity to Table storage using the repository

@@ -3,6 +3,9 @@
     List<RedditService.Models.CommentEntity> comments = ViewBag.Comments;
     var klik = ViewBag.ButtonClick;
     var clickedPostRowKey = ViewBag.ClickedPostRowKey; // Add this line
+    var EmailOwnerPost = ViewBag.EmailOwnerPost;
+    var react = ViewBag.react;
+
 }
 
 <script src="https://use.fontawesome.com/2903eb4599.js"></script>
@@ -44,24 +47,26 @@
             <p>@p.Content</p>
             <div class="card-footer">
                 <div class="card-meta card-meta--views">
-                    <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
-                        <input type="hidden" name="rowkey" value="@p.RowKey" />
-                        <input type="hidden" name="isUpvote" value="true" />
-                        <a href="#" class="like" onclick="this.closest('form').submit(); return false;">
-                            <i class="fa fa-thumbs-o-up"></i>
-                            <input class="qty1" name="qty1" type="text" value="@p.Upvotes" readonly />
-                        </a>
-                    </form>
-
-                    <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
-                        <input type="hidden" name="rowkey" value="@p.RowKey" />
-                        <input type="hidden" name="isUpvote" value="false" />
-                        <a href="#" class="dislike" onclick="this.closest('form').submit(); return false;">
-                            <i class="fa fa-thumbs-o-down"></i>
-                            <input class="qty1" name="qty1" type="text" value="@p.Downvotes" readonly />
-                        </a>
-                    </form>
-
+                    <div class="@(react == "up" ? "liked" : "")">
+                        <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
+                            <input type="hidden" name="rowkey" value="@p.RowKey" />
+                            <input type="hidden" name="isUpvote" value="true" />
+                            <a href="#" class="like" onclick="this.closest('form').submit(); return false;">
+                                <i class="fa fa-thumbs-o-up "></i>
+                                <input class="qty1" name="qty1" type="text" value="@p.Upvotes" readonly />
+                            </a>
+                        </form>
+                    </div>
+                    <div class="@(react == "down" ? "disliked" : "")">
+                        <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
+                            <input type="hidden" name="rowkey" value="@p.RowKey" />
+                            <input type="hidden" name="isUpvote" value="false" />
+                            <a href="#" class="dislike" onclick="this.closest('form').submit(); return false;">
+                                <i class="fa fa-thumbs-o-down"></i>
+                                <input class="qty1" name="qty1" type="text" value="@p.Downvotes" readonly />
+                            </a>
+                        </form>
+                    </div>
                     <form action="@Url.Action("Comments", "Feed")" method="get" style="display:inline;">
                         <input type="hidden" name="rowkey" value="@p.RowKey" />
                         <a href="#" onclick="this.closest('form').submit(); return false;">
@@ -82,12 +87,15 @@
                         <div class="comment">
                             <h6>@c.AuthorEmail</h6>
                             <p>@c.Content</p>
+                            
+                            @if (p.AuthorEmail == EmailOwnerPost || c.AuthorEmail==EmailOwnerPost) { 
                             <form action="@Url.Action("DeleteComment", "Feed")" method="post" style="display:inline;">
                                 <input type="hidden" name="commentId" value="@c.RowKey" />
                                 <button type="submit" class="delete-comment">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>
+                            }
                         </div>
                     }
                 }

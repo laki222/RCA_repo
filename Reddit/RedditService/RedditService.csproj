@@ -325,6 +325,7 @@
     </Compile>
     <Compile Include="Models\CommentEntity.cs" />
     <Compile Include="Models\PostEntity.cs" />
+    <Compile Include="Models\ReactionEntity.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserEntity.cs" />
     <Compile Include="Models\UserMapper.cs" />
@@ -336,6 +337,7 @@
     </Compile>
     <Compile Include="Repository\CommentRepository.cs" />
     <Compile Include="Repository\PostRepository.cs" />
+    <Compile Include="Repository\ReactionRepository.cs" />
     <Compile Include="Repository\UserDataRepository.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>

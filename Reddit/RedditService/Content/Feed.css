@@ -131,7 +131,13 @@ img {
     cursor: pointer;
     color: #565656;
 }
+.liked {
+    color: green; /* ili boja po vašem izboru */
+}
 
+.disliked {
+    color: red; /* ili boja po vašem izboru */
+}
     .icon-button svg {
         width: 1em;
         height: 1em;

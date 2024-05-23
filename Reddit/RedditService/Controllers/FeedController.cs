@@ -20,13 +20,14 @@ namespace RedditService.Controllers
         private readonly CloudBlobContainer blobContainer;
         private readonly UserDataRepository _userDataRepository;
         private readonly CommentRepository _commentRepository;
-
+        private readonly ReactionRepository _reactionRepository;
 
         public FeedController()
         {
             _userDataRepository = new UserDataRepository();
             _postRepository = new PostRepository();
             _commentRepository = new CommentRepository();
+            _reactionRepository= new ReactionRepository();
             var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
@@ -47,7 +48,11 @@ namespace RedditService.Controllers
             List<PostEntity> list = new List<PostEntity>();
             list = await _postRepository.RetrieveAllPosts();
             ViewBag.Posts = list;
+            UserEntity test = Session["UserProfile"] as UserEntity;
 
+            ViewBag.EmailOwnerPost= test.RowKey;
+
+            
 
             return View();
         }
@@ -60,20 +65,64 @@ namespace RedditService.Controllers
 
             var post = await _postRepository.GetPostAsync(rowkey);
 
-            if (isUpvote)
+            List<ReactionEntity> reactions = await _reactionRepository.RetrieveAllReactions();
+
+            // Pronađite postojeću reakciju korisnika na post
+            var existingReaction = reactions.FirstOrDefault(r => r.SubscribedUser == user.RowKey && r.PostId == post.RowKey);
+
+            if (existingReaction != null)
             {
-                post.Upvotes += 1;
+                if (existingReaction.Reaction == "UPVOTE")
+                {
+                    ViewBag.react = "up";
+                }
+                else
+                {
+                    ViewBag.react = "down";
+                }
+
+                // Postoji reakcija, potrebno je ažurirati
+                if (isUpvote && existingReaction.Reaction != "UPVOTE")
+                {
+                    // Ako je korisnik kliknuo na upvote, a prethodna reakcija je bila downvote
+                    post.Upvotes += 1;
+                    post.Downvotes -= 1;
+                    existingReaction.Reaction = "UPVOTE";
+
+                    await _reactionRepository.UpdateReactionAsync(existingReaction);
+                }
+                else if (!isUpvote && existingReaction.Reaction != "DOWNVOTE")
+                {
+                    // Ako je korisnik kliknuo na downvote, a prethodna reakcija je bila upvote
+                    post.Downvotes += 1;
+                    post.Upvotes -= 1;
+                    existingReaction.Reaction = "DOWNVOTE";
+                    await _reactionRepository.UpdateReactionAsync(existingReaction);
+                }
             }
-            else if (!isUpvote)
+            else
             {
-                post.Downvotes += 1;
+                // Nema postojeće reakcije, dodajte novu
+                if (isUpvote)
+                {
+                    post.Upvotes += 1;
+                    ViewBag.react = "up";
+                    await _reactionRepository.AddReactionAsync(new ReactionEntity(post, "UPVOTE", user.RowKey));
+                }
+                else
+                {
+                    post.Downvotes += 1;
+                    ViewBag.react = "down";
+                    await _reactionRepository.AddReactionAsync(new ReactionEntity(post, "DOWNVOTE", user.RowKey));
+                }
             }
+
             await _postRepository.UpdatePostAsync(post);
 
-
-            // MoÅ¾ete se vratiti na istu stranicu ili neku drugu stranicu
+            // Možete se vratiti na istu stranicu ili neku drugu stranicu
             return RedirectToAction("Index");
         }
+
 
 
         [HttpGet]
@@ -87,7 +136,9 @@ namespace RedditService.Controllers
 
             ViewBag.Posts = listpost;
             ViewBag.Comments = list;
+            UserEntity test = Session["UserProfile"] as UserEntity;
 
+            ViewBag.EmailOwnerPost = test.RowKey;
             var previousRowKey = TempData["ClickedPostRowKey"] as string;
 
             if (previousRowKey == rowkey)

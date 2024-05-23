@@ -25,5 +25,7 @@ namespace RedditService.Models
         public int NumComments { get; set; }
         public int Upvotes { get; set; }
         public int Downvotes { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
