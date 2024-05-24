@@ -6,6 +6,7 @@ using RedditService.Models;
 using RedditService.Repository;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -48,17 +49,20 @@ namespace RedditService.Controllers
 
             // Retrieve all posts
             List<PostEntity> list = await _postRepository.RetrieveAllPosts();
-
+            List<PostEntity> filteredPosts = list.Where(post => !post.IsDeleted).ToList();
             // Get the current user's email
             UserEntity currentUser = Session["UserProfile"] as UserEntity;
             ViewBag.EmailOwnerPost = currentUser?.RowKey;
 
             // Calculate total number of pages
-            int totalPosts = list.Count;
+            int totalPosts = filteredPosts.Count;
             int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
 
+
+
+
             // Get the posts for the current page
-            List<PostEntity> paginatedPosts = list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            List<PostEntity> paginatedPosts = filteredPosts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             // Pass paginated posts, total pages, and current page to the view
             ViewBag.PaginatedPosts = paginatedPosts;
@@ -137,14 +141,14 @@ namespace RedditService.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Comments(string rowkey)
+        public async Task<ActionResult> Comments(string rowkey, int page = 1, int pageSize = 3)
         {
             ViewBag.IsUserLoggedIn = "true";
             await Task.Delay(100);
 
             List<CommentEntity> list = await _commentRepository.RetrieveAllComments();
             List<PostEntity> listpost = await _postRepository.RetrieveAllPosts();
-
+            List<PostEntity> filteredPosts = listpost.Where(post => !post.IsDeleted).ToList();
             ViewBag.Posts = listpost;
             ViewBag.Comments = list;
             UserEntity test = Session["UserProfile"] as UserEntity;
@@ -164,7 +168,16 @@ namespace RedditService.Controllers
             }
 
             TempData["ClickedPostRowKey"] = ViewBag.ClickedPostRowKey;
+            int totalPosts = filteredPosts.Count;
+            int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
 
+            // Get the posts for the current page
+            List<PostEntity> paginatedPosts = filteredPosts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pass paginated posts, total pages, and current page to the view
+            ViewBag.PaginatedPosts = paginatedPosts;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
             return View("Index");
         }
 
@@ -220,7 +233,7 @@ namespace RedditService.Controllers
         }
 
          [HttpGet]
-        public async Task<ActionResult> Search(string titleFilter)
+        public async Task<ActionResult> Search(string titleFilter, int page = 1, int pageSize = 3)
         {
             ViewBag.IsUserLoggedIn = "true";
             await Task.Delay(100);
@@ -235,8 +248,22 @@ namespace RedditService.Controllers
             if (!string.IsNullOrEmpty(titleFilter))
             {
                 // Filter the posts based on the title containing the input text
-                listpost = listpost.Where(p => p.Title.Contains(titleFilter)).ToList();
+                listpost = listpost.Where(p =>p.IsDeleted==false && p.Title.Contains(titleFilter)).ToList();
             }
+
+
+            int totalPosts = listpost.Count;
+            int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
+
+            // Get the posts for the current page
+            List<PostEntity> paginatedPosts = listpost.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pass paginated posts, total pages, and current page to the view
+            ViewBag.PaginatedPosts = paginatedPosts;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+
 
             ViewBag.Posts = listpost;
             ViewBag.Comments = await _commentRepository.RetrieveAllComments();
@@ -245,7 +272,7 @@ namespace RedditService.Controllers
 
          
         }
-        public async Task<ActionResult> Sort(string sortBy, string sortOrder)
+        public async Task<ActionResult> Sort(string sortBy, string sortOrder, int page = 1, int pageSize = 3)
         {
             ViewBag.IsUserLoggedIn = "true";
             await Task.Delay(100);
@@ -285,6 +312,112 @@ namespace RedditService.Controllers
         {
             return PartialView("_CreatePostPartial");
         }
+
+        public async Task<ActionResult> MyPosts()
+        {
+            ViewBag.IsUserLoggedIn = "true";
+            await Task.Delay(100);
+            UserEntity user = Session["UserProfile"] as UserEntity;
+            List<PostEntity> posts = await _postRepository.RetrieveAllPosts();
+
+            List<PostEntity>UserPostsFilter= new List<PostEntity>();
+
+            foreach (PostEntity post in posts)
+            {
+                if(post.IsDeleted==false && post.AuthorEmail==user.RowKey)
+                {
+                    UserPostsFilter.Add(post);
+                }
+            }
+
+            List<ReactionEntity> reactions = await _reactionRepository.RetrieveUpVotesByEmail(user.RowKey);
+
+            List<PostEntity> UserPostsUpvoted = new List<PostEntity>();
+
+
+
+            foreach (ReactionEntity react in reactions)
+            {
+
+                UserPostsUpvoted.Add(await _postRepository.GetPostAsync(react.PostId));
+            }
+
+            List<PostEntity> filteredPosts = UserPostsUpvoted.Where(post => !post.IsDeleted).ToList();
+
+
+            ViewBag.UpVoted = filteredPosts;
+
+
+            ViewBag.UserPosts = UserPostsFilter;
+
+
+            return View("MyPosts");
+        }
+
+        public async Task<ActionResult> DeletePost(string postId)
+        {
+            ViewBag.IsUserLoggedIn = "true";
+            var post = await _postRepository.GetPost(postId);
+            await _postRepository.DeletePostAsync(post);
+            UserEntity user = Session["UserProfile"] as UserEntity;
+            List<PostEntity> posts = await _postRepository.RetrieveAllPosts();
+
+            List<PostEntity> UserPostsFilter = new List<PostEntity>();
+
+            foreach (PostEntity p in posts)
+            {
+                if (p.IsDeleted == false && p.AuthorEmail == user.RowKey)
+                {
+                    UserPostsFilter.Add(p);
+                }
+            }
+
+            List<ReactionEntity> reactions = await _reactionRepository.RetrieveUpVotesByEmail(user.RowKey);
+
+            List<PostEntity> UserPostsUpvoted = new List<PostEntity>();
+
+
+
+            foreach (ReactionEntity react in reactions)
+            {
+
+                UserPostsUpvoted.Add(await _postRepository.GetPostAsync(react.PostId));
+            }
+
+            List<PostEntity> filteredPosts = UserPostsUpvoted.Where(p => !p.IsDeleted).ToList();
+
+
+            ViewBag.UpVoted = filteredPosts;
+
+
+
+
+            ViewBag.UserPosts = UserPostsFilter;
+            return View("MyPosts");
+
+
+        }
+
+        public async Task<ActionResult> UpvotedPosts()
+        {
+            ViewBag.IsUserLoggedIn = "true";
+            await Task.Delay(100);
+            UserEntity user = Session["UserProfile"] as UserEntity;
+            List<ReactionEntity> reactions = await _reactionRepository.RetrieveUpVotesByEmail(user.RowKey);
+
+            List<PostEntity> UserPostsUpvoted = new List<PostEntity>();
+
+            foreach (ReactionEntity react in reactions)
+            {
+
+                UserPostsUpvoted.Add(await _postRepository.GetPostAsync(react.PostId));
+            }
+
+            ViewBag.UpVoted = UserPostsUpvoted;
+
+            return View("MyPosts");
+        }
+
 
     }
 }

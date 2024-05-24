@@ -68,8 +68,16 @@ namespace RedditService.Repository
             _table.Execute(updateOperation);
         }
 
-        
 
+        public async Task DeletePostAsync(PostEntity post)
+        {
+            await Task.Delay(100);
+
+            post.IsDeleted = true;
+
+            TableOperation updateOperation = TableOperation.Replace(post);
+            _table.Execute(updateOperation);
+        }
 
 
     }

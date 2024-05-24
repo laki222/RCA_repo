@@ -43,6 +43,9 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("MyPosts", "MyPosts", "Feed", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1">
                         <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
                     <ul class="navbar-nav flex-grow-1 justify-content-end">

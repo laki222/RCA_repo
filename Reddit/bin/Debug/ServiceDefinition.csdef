@@ -27,10 +27,10 @@
     <LocalResources></LocalResources>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\rcf\Debug\RedditServiceContent\" />
+        <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\rcf\Debug\RedditServiceContent\" />
       </Content>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\ecf\RedditServiceContent\" />
+        <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\ecf\RedditServiceContent\" />
       </Content>
     </Contents>
     <Imports>
@@ -43,10 +43,10 @@
     </ConfigurationSettings>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\rcf\Debug\NotificationServiceContent\" />
+        <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\rcf\Debug\NotificationServiceContent\" />
       </Content>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\ecf\NotificationServiceContent\" />
+        <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\ecf\NotificationServiceContent\" />
       </Content>
     </Contents>
     <Imports>
@@ -59,10 +59,10 @@
     </ConfigurationSettings>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\rcf\Debug\HealthMonitoringServiceContent\" />
+        <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\rcf\Debug\HealthMonitoringServiceContent\" />
       </Content>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\ecf\HealthMonitoringServiceContent\" />
+        <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\ecf\HealthMonitoringServiceContent\" />
       </Content>
     </Contents>
     <Imports>
@@ -85,10 +85,10 @@
     </Endpoints>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\rcf\Debug\HealthStatusServiceContent\" />
+        <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\rcf\Debug\HealthStatusServiceContent\" />
       </Content>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Korisnik\Source\Repos\twenty1coa\RCA_repo\Reddit\ecf\HealthStatusServiceContent\" />
+        <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\ecf\HealthStatusServiceContent\" />
       </Content>
     </Contents>
     <Imports>

@@ -2,32 +2,28 @@
     List<RedditService.Models.PostEntity> posts = ViewBag.Posts;
     List<RedditService.Models.CommentEntity> comments = ViewBag.Comments;
     var klik = ViewBag.ButtonClick;
-    var clickedPostRowKey = ViewBag.ClickedPostRowKey; // Add this line
+    var clickedPostRowKey = ViewBag.ClickedPostRowKey;
     var EmailOwnerPost = ViewBag.EmailOwnerPost;
     var react = ViewBag.react;
-
 }
 
 <script src="https://use.fontawesome.com/2903eb4599.js"></script>
-
 <link href="~/Content/Feed.css" rel="stylesheet" type="text/css" />
 
 <div style="position: relative;">
     <div id="createPostContainer">
         @Html.Partial("_CreatePostPartial")
     </div>
-    <!-- Button to toggle visibility of the create post view -->
     <a id="toggleCreatePostButton" class="create-post-button" href="#createPostContainer" asp-action="ShowCreatePost">
         <i class="fa fa-plus"></i> Create Post
     </a>
-
 </div>
 
 <h1>SEARCH</h1>
 <form action="@Url.Action("Search", "Feed")" method="get" style="display:inline;">
     <input type="text" name="titleFilter" />
     <button type="submit">
-        <i class="fa fa-search" style="font-size: 1.2em;"></i> <!-- Magnifying glass icon -->
+        <i class="fa fa-search" style="font-size: 1.2em;"></i>
     </button>
 </form>
 
@@ -36,91 +32,93 @@
         <option value="">Sort by</option>
         <option value="title">Title</option>
         <option value="upvotes">Upvotes</option>
-        <!-- Add more options for other sorting criteria if needed -->
     </select>
-    <button type="submit" name="sortOrder" value="ascending"> <i class="fa fa-arrow-up"></i></button>
-    <button type="submit" name="sortOrder" value="descending"> <i class="fa fa-arrow-down"></i></button>
+    <button type="submit" name="sortOrder" value="ascending">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+    <button type="submit" name="sortOrder" value="descending">
+        <i class="fa fa-arrow-down"></i>
+    </button>
 </form>
-
 
 <div class="card-list">
     @foreach (var p in ViewBag.PaginatedPosts)
     {
-        <article class="card">
-            <figure class="card-image">
-                <img src="@p.ImageUrl" alt="@p.Title" />
-            </figure>
-            <div class="card-header">
-                <a href="#">@p.Title</a>
-            </div>
-
-            <p>@p.Content</p>
-            <div class="card-footer">
-                <div class="card-meta card-meta--views">
-                    <div class="@(react == "up" ? "liked" : "")">
-                        <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
-                            <input type="hidden" name="rowkey" value="@p.RowKey" />
-                            <input type="hidden" name="isUpvote" value="true" />
-                            <a href="#" class="like" onclick="this.closest('form').submit(); return false;">
-                                <i class="fa fa-thumbs-o-up "></i>
-                                <input class="qty1" name="qty1" type="text" value="@p.Upvotes" readonly />
-                            </a>
-                        </form>
-                    </div>
-                    <div class="@(react == "down" ? "disliked" : "")">
-                        <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
-                            <input type="hidden" name="rowkey" value="@p.RowKey" />
-                            <input type="hidden" name="isUpvote" value="false" />
-                            <a href="#" class="dislike" onclick="this.closest('form').submit(); return false;">
-                                <i class="fa fa-thumbs-o-down"></i>
-                                <input class="qty1" name="qty1" type="text" value="@p.Downvotes" readonly />
-                            </a>
-                        </form>
-                    </div>
-                    <form action="@Url.Action("Comments", "Feed")" method="get" style="display:inline;">
-                        <input type="hidden" name="rowkey" value="@p.RowKey" />
-                        <a href="#" onclick="this.closest('form').submit(); return false;">
-                            <i class="fa fa-comments-o"></i>
-                        </a>
-                    </form>
+        if (!p.IsDeleted)
+        {
+            <article class="card">
+                <figure class="card-image">
+                    <img src="@p.ImageUrl" alt="@p.Title" />
+                </figure>
+                <div class="card-header">
+                    <a href="#">@p.Title</a>
                 </div>
-            </div>
-
-            @if (klik == "clicked" && clickedPostRowKey == p.RowKey) // Modify this line
-            {
-                <h1>Comments</h1>
-
-                foreach (var c in comments)
-                {
-                    if (c.PostId == p.RowKey && !c.IsDeleted)
-                    {
-                        <div class="comment">
-                            <h6>@c.AuthorEmail</h6>
-                            <p>@c.Content</p>
-
-                            @if (p.AuthorEmail == EmailOwnerPost || c.AuthorEmail == EmailOwnerPost)
-                            {
-                                <form action="@Url.Action("DeleteComment", "Feed")" method="post" style="display:inline;">
-                                    <input type="hidden" name="commentId" value="@c.RowKey" />
-                                    <button type="submit" class="delete-comment">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            }
+                <p>@p.Content</p>
+                <div class="card-footer">
+                    <div class="card-meta card-meta--views">
+                        <div class="@(react == "up" ? "liked" : "")">
+                            <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
+                                <input type="hidden" name="rowkey" value="@p.RowKey" />
+                                <input type="hidden" name="isUpvote" value="true" />
+                                <a href="#" class="like" onclick="this.closest('form').submit(); return false;">
+                                    <i class="fa fa-thumbs-o-up"></i>
+                                    <input class="qty1" name="qty1" type="text" value="@p.Upvotes" readonly />
+                                </a>
+                            </form>
                         </div>
-                    }
-                }
-                <div class="comment-section">
-                    <h5>Leave a comment</h5>
-                    <form action="@Url.Action("AddComment", "Feed")" method="post" class="comment-form">
-                        <input type="hidden" name="postId" value="@p.RowKey" />
-                        <textarea name="content" placeholder="Add a comment..."></textarea>
-                        <button type="submit">Submit</button>
-                    </form>
-                    <hr />
+                        <div class="@(react == "down" ? "disliked" : "")">
+                            <form action="@Url.Action("LikePost", "Feed")" method="post" style="display:inline;">
+                                <input type="hidden" name="rowkey" value="@p.RowKey" />
+                                <input type="hidden" name="isUpvote" value="false" />
+                                <a href="#" class="dislike" onclick="this.closest('form').submit(); return false;">
+                                    <i class="fa fa-thumbs-o-down"></i>
+                                    <input class="qty1" name="qty1" type="text" value="@p.Downvotes" readonly />
+                                </a>
+                            </form>
+                        </div>
+                        <form action="@Url.Action("Comments", "Feed")" method="get" style="display:inline;">
+                            <input type="hidden" name="rowkey" value="@p.RowKey" />
+                            <a href="#" onclick="this.closest('form').submit(); return false;">
+                                <i class="fa fa-comments-o"></i>
+                            </a>
+                        </form>
+                    </div>
                 </div>
-            }
-        </article>
+
+                @if (klik == "clicked" && clickedPostRowKey == p.RowKey)
+                {
+                    <h1>Comments</h1>
+                    foreach (var c in comments)
+                    {
+                        if (c.PostId == p.RowKey && !c.IsDeleted)
+                        {
+                            <div class="comment">
+                                <h6>@c.AuthorEmail</h6>
+                                <p>@c.Content</p>
+                                @if (p.AuthorEmail == EmailOwnerPost || c.AuthorEmail == EmailOwnerPost)
+                                {
+                                    <form action="@Url.Action("DeleteComment", "Feed")" method="post" style="display:inline;">
+                                        <input type="hidden" name="commentId" value="@c.RowKey" />
+                                        <button type="submit" class="delete-comment">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        }
+                    }
+                    <div class="comment-section">
+                        <h5>Leave a comment</h5>
+                        <form action="@Url.Action("AddComment", "Feed")" method="post" class="comment-form">
+                            <input type="hidden" name="postId" value="@p.RowKey" />
+                            <textarea name="content" placeholder="Add a comment..."></textarea>
+                            <button type="submit">Submit</button>
+                        </form>
+                        <hr />
+                    </div>
+                }
+            </article>
+        }
     }
 </div>
 

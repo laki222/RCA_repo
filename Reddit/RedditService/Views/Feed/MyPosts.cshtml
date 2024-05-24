@@ -1,0 +1,73 @@
+﻿@{
+    List<RedditService.Models.PostEntity> UserPosts = ViewBag.UserPosts;
+    List<RedditService.Models.PostEntity> UpVotedPosts = ViewBag.UpVoted;
+}
+
+<h2>MyPosts</h2>
+
+@if (UserPosts != null && UserPosts.Count > 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in UserPosts)
+            {
+                <tr>
+                    <td>@post.Title</td>
+                    <td>
+                        <form action="@Url.Action("DeletePost", "Feed")" method="post" style="display:inline;">
+                            <input type="hidden" name="postId" value="@post.RowKey" />
+                            <button type="submit" class="delete-comment">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No posts available.</p>
+}
+
+<h2>Upvoted Posts</h2>
+@if (UpVotedPosts != null && UpVotedPosts.Count > 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in UpVotedPosts)
+            {
+                <tr>
+                    <td>@post.Title</td>
+                    <td>
+                        <form action="@Url.Action("DownVote", "Feed")" method="post" style="display:inline;">
+                            <input type="hidden" name="postId" value="@post.RowKey" />
+                            <button type="submit" class="delete-comment">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No posts available.</p>
+}
+
+

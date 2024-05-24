@@ -55,6 +55,24 @@ namespace RedditService.Repository
             _table.Execute(updateOperation);
         }
 
+        public async Task<List<ReactionEntity>> RetrieveUpVotesByEmail(string email)
+        {
+            TableQuery<ReactionEntity> query = new TableQuery<ReactionEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Reactions"));
+            List<ReactionEntity> entities = new List<ReactionEntity>();
+
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<ReactionEntity> resultSegment = await _table.ExecuteQuerySegmentedAsync(query, token);
+                token = resultSegment.ContinuationToken;
+                entities.AddRange(resultSegment.Results);
+            } while (token != null);
+
+            return entities.FindAll(p=>p.SubscribedUser==email && p.Reaction=="UPVOTE");
+
+            
+        }
+
 
     }
 }

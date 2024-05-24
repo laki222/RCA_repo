@@ -406,6 +406,7 @@
     <Content Include="Views\Feed\Index.cshtml" />
     <Content Include="Views\Comment\Comment.cshtml" />
     <Content Include="Views\Feed\_CreatePostPartial.cshtml" />
+    <Content Include="Views\Feed\MyPosts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
