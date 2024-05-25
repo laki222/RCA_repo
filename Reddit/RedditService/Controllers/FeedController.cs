@@ -1,17 +1,25 @@
-﻿using Microsoft.Azure;
+﻿using Azure.Storage.Queues;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
+using Newtonsoft.Json;
 using RedditService.Models;
 using RedditService.Repository;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+
+
+
 
 namespace RedditService.Controllers
 {
@@ -22,6 +30,11 @@ namespace RedditService.Controllers
         private readonly UserDataRepository _userDataRepository;
         private readonly CommentRepository _commentRepository;
         private readonly ReactionRepository _reactionRepository;
+        private const string ServiceBusConnectionString = "DataConnectionString";
+        private const string QueueName = "notifications";
+        private static QueueClient queueClient;
+
+        private CloudQueue queue;
 
         public FeedController()
         {
@@ -31,6 +44,15 @@ namespace RedditService.Controllers
             _reactionRepository= new ReactionRepository();
             var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+
+          
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+            queue = queueClient.GetQueueReference("notifications");
+
+            // Create the queue if it doesn't already exist
+            queue.CreateIfNotExistsAsync().Wait();
+
 
             var blobClient = storageAccount.CreateCloudBlobClient();
             blobContainer = blobClient.GetContainerReference("postimages");
@@ -201,6 +223,18 @@ namespace RedditService.Controllers
 
                     // Add the comment entity to the repository
                     await _commentRepository.AddCommentAsync(commentEntity);
+
+
+                    string messageText = Newtonsoft.Json.JsonConvert.SerializeObject(commentEntity);
+
+                    // Create a new queue message
+                    CloudQueueMessage message = new CloudQueueMessage(messageText);
+
+                    // Add the message to the queue
+                    await queue.AddMessageAsync(message);
+
+
+
                     List<CommentEntity> list = new List<CommentEntity>();
                     list = await _commentRepository.RetrieveAllComments();
                     List<PostEntity> listpost = new List<PostEntity>();

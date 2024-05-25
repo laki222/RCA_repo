@@ -1,11 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Reddit" generation="1" functional="0" release="0" Id="9c3cf90a-6d77-40eb-a1ec-999022d49f74" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Reddit" generation="1" functional="0" release="0" Id="fe2e704f-e42b-4b3e-92f2-8f884a48f5f4" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="RedditGroup" generation="1" functional="0" release="0">
       <componentports>
         <inPort name="HealthStatusService:Endpoint1" protocol="http">
           <inToChannel>
             <lBChannelMoniker name="/Reddit/RedditGroup/LB:HealthStatusService:Endpoint1" />
+          </inToChannel>
+        </inPort>
+        <inPort name="NotificationService:Endpoint1" protocol="tcp">
+          <inToChannel>
+            <lBChannelMoniker name="/Reddit/RedditGroup/LB:NotificationService:Endpoint1" />
           </inToChannel>
         </inPort>
         <inPort name="RedditService:Endpoint1" protocol="http">
@@ -33,6 +38,11 @@
         <aCS name="HealthStatusServiceInstances" defaultValue="[1,1,1]">
           <maps>
             <mapMoniker name="/Reddit/RedditGroup/MapHealthStatusServiceInstances" />
+          </maps>
+        </aCS>
+        <aCS name="NotificationService:DataConnectionString" defaultValue="">
+          <maps>
+            <mapMoniker name="/Reddit/RedditGroup/MapNotificationService:DataConnectionString" />
           </maps>
         </aCS>
         <aCS name="NotificationService:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
@@ -67,6 +77,11 @@
             <inPortMoniker name="/Reddit/RedditGroup/HealthStatusService/Endpoint1" />
           </toPorts>
         </lBChannel>
+        <lBChannel name="LB:NotificationService:Endpoint1">
+          <toPorts>
+            <inPortMoniker name="/Reddit/RedditGroup/NotificationService/Endpoint1" />
+          </toPorts>
+        </lBChannel>
         <lBChannel name="LB:RedditService:Endpoint1">
           <toPorts>
             <inPortMoniker name="/Reddit/RedditGroup/RedditService/Endpoint1" />
@@ -92,6 +107,11 @@
         <map name="MapHealthStatusServiceInstances" kind="Identity">
           <setting>
             <sCSPolicyIDMoniker name="/Reddit/RedditGroup/HealthStatusServiceInstances" />
+          </setting>
+        </map>
+        <map name="MapNotificationService:DataConnectionString" kind="Identity">
+          <setting>
+            <aCSMoniker name="/Reddit/RedditGroup/NotificationService/DataConnectionString" />
           </setting>
         </map>
         <map name="MapNotificationService:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
@@ -125,7 +145,7 @@
           <role name="HealthMonitoringService" generation="1" functional="0" release="0" software="C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthMonitoringService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="-1" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
             <settings>
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;HealthMonitoringService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot; /&gt;&lt;r name=&quot;RedditService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;HealthMonitoringService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;RedditService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -145,7 +165,7 @@
             </componentports>
             <settings>
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;HealthStatusService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot; /&gt;&lt;r name=&quot;RedditService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;HealthStatusService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;RedditService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -160,9 +180,13 @@
         </groupHascomponents>
         <groupHascomponents>
           <role name="NotificationService" generation="1" functional="0" release="0" software="C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\NotificationService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="-1" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+            <componentports>
+              <inPort name="Endpoint1" protocol="tcp" portRanges="10100" />
+            </componentports>
             <settings>
+              <aCS name="DataConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;NotificationService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot; /&gt;&lt;r name=&quot;RedditService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;NotificationService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;RedditService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -183,7 +207,7 @@
             <settings>
               <aCS name="DataConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;RedditService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot; /&gt;&lt;r name=&quot;RedditService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;RedditService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;RedditService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -214,14 +238,19 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="9c827e35-0812-49bc-b75c-0e273806058d" ref="Microsoft.RedDog.Contract\ServiceContract\RedditContract@ServiceDefinition">
+    <implementation Id="a07170bd-358d-43b9-8cac-be318a6b040a" ref="Microsoft.RedDog.Contract\ServiceContract\RedditContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="77a4d79e-bab3-4aa2-b1ae-9d75f861ed03" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="d5e93dde-6f0d-4cfe-af71-283debbbac48" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/HealthStatusService:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="3d3c2acb-bbac-4930-b796-b69a8b2f4b3b" ref="Microsoft.RedDog.Contract\Interface\RedditService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="bdf64e91-d458-4300-a44c-96d0e7cfb164" ref="Microsoft.RedDog.Contract\Interface\NotificationService:Endpoint1@ServiceDefinition">
+          <inPort>
+            <inPortMoniker name="/Reddit/RedditGroup/NotificationService:Endpoint1" />
+          </inPort>
+        </interfaceReference>
+        <interfaceReference Id="b5c33ec7-3664-4199-8a7c-6dfa3c5b3659" ref="Microsoft.RedDog.Contract\Interface\RedditService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/RedditService:Endpoint1" />
           </inPort>

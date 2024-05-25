@@ -40,7 +40,11 @@
   <WorkerRole name="NotificationService" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="DataConnectionString" />
     </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="tcp" port="10100" />
+    </Endpoints>
     <Contents>
       <Content destination=".\">
         <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\rcf\Debug\NotificationServiceContent\" />

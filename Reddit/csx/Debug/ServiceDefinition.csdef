@@ -40,9 +40,12 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
+      <Setting name="DataConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
-    <Endpoints />
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="tcp" port="10100" localPort="10100" />
+    </Endpoints>
     <Certificates />
   </WorkerRole>
 </ServiceDefinition>

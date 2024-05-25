@@ -1,6 +1,11 @@
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.ServiceBus.Messaging;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +13,13 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Mail;
+using Microsoft.Azure;
+using RedditService;
+using RedditService.Models;
+using NotificationService.Models;
+using RedditService.Repository;
+
 
 namespace NotificationService
 {
@@ -15,6 +27,15 @@ namespace NotificationService
     {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
+        private QueueClient queueClient;
+
+      
+        private const string QueueName = "test";
+        private const string StorageConnectionString = "DataConnectionString";
+        private const string SendGridApiKey = "YourSendGridApiKey";
+        // private readonly CommentRepository commentRepository=new CommentRepository();
+        private CloudQueue queue;
+      
 
         public override void Run()
         {
@@ -32,20 +53,19 @@ namespace NotificationService
 
         public override bool OnStart()
         {
-            // Use TLS 1.2 for Service Bus connections
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
-            // For information on handling configuration changes
-            // see the MSDN topic at https://go.microsoft.com/fwlink/?LinkId=166357.
+            // Initialize the queue client
+            string storageConnectionString = RoleEnvironment.GetConfigurationSettingValue("DataConnectionString");
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+            queue = queueClient.GetQueueReference("notifications");
 
-            bool result = base.OnStart();
+            // Create the queue if it doesn't already exist
+            queue.CreateIfNotExists();
 
-            Trace.TraceInformation("NotificationService has been started");
-
-            return result;
+            return base.OnStart();
         }
 
         public override void OnStop()
@@ -62,12 +82,85 @@ namespace NotificationService
 
         private async Task RunAsync(CancellationToken cancellationToken)
         {
-            // TODO: Replace the following with your own logic.
+           
+
             while (!cancellationToken.IsCancellationRequested)
             {
-                Trace.TraceInformation("Working");
+                CloudQueueMessage message = await queue.GetMessageAsync();
+                if (message != null)
+                {
+                    try
+                    {
+
+                        var comment = Newtonsoft.Json.JsonConvert.DeserializeObject<CommentEntity>(message.AsString);
+                        await ProcessMessageAsync(comment);
+
+                        await queue.DeleteMessageAsync(message);
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.TraceError("Error processing message: {0}", ex.Message);
+                       
+                    }
+                }
+
                 await Task.Delay(1000);
             }
         }
+
+        private async Task ProcessMessageAsync(CommentEntity comment)
+        {
+            //CommentEntity comment=await commentRepository.GetComment(commentId);
+            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
+            var _storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
+
+            var table = tableClient.GetTableReference("Reactions");
+            var query = new TableQuery<ReactionEntity>()
+                .Where(TableQuery.GenerateFilterCondition("PostId", QueryComparisons.Equal, comment.PostId));
+            var result = await table.ExecuteQuerySegmentedAsync(query, null);
+
+            var emails = result.Results.FindAll(sub => sub.Reaction=="UPVOTE").ToList();
+
+
+           // Assume this method fetches the comment text
+            await SendEmailsAsync(emails, comment.Content);
+
+            // Log the notification details
+            var notificationLog = tableClient.GetTableReference("NotificationLog");
+            var logEntity = new NotificationLogEntity
+            {
+                PartitionKey = "NotificationLog",
+                RowKey = Guid.NewGuid().ToString(),
+                Date = DateTime.UtcNow,
+                CommentId = comment.RowKey,
+                EmailCount = emails.Count
+            };
+            await notificationLog.ExecuteAsync(TableOperation.Insert(logEntity));
+        }
+
+      
+
+        private async Task SendEmailsAsync(List<ReactionEntity> emails, string commentText)
+        {
+           
+            foreach (var email in emails)
+            {
+                var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+                var client = new SendGridClient("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");
+                var from = new EmailAddress("123copa123@gmail.com", "Example User");
+                var subject = "Sending with SendGrid is Fun";
+                var to = new EmailAddress(email.SubscribedUser, "Example User");
+                var plainTextContent = "and easy to do anywhere, even with C#";
+                var htmlContent = "<strong>"+commentText+"</strong>";
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                var response = await client.SendEmailAsync(msg);
+                var straa = "";
+                Trace.TraceInformation($"Email sent to {email} with status {response.StatusCode}");
+            }
+        }
+
+       
+       
     }
 }
