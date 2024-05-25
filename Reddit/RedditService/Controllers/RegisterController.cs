@@ -25,12 +25,12 @@ namespace RedditService.Controllers
         private CloudStorageAccount _storageAccount;
         private CloudTable userTable;
         private CloudBlobContainer blobContainer;
-       
+
         public RegisterController()
         {
             _userDataRepository = new UserDataRepository();
-            var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
-           
+            var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString"));
+
 
 
             var blobClient = storageAccount.CreateCloudBlobClient();
@@ -99,7 +99,3 @@ namespace RedditService.Controllers
         }
     }
 }
-
-
-    
- 

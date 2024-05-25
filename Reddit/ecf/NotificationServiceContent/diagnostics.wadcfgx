@@ -30,10 +30,10 @@
         </PerformanceCounters>
       </DiagnosticMonitorConfiguration>
     </WadCfg>
-    <StorageAccount>devstoreaccount1</StorageAccount>
+    <StorageAccount>cloudprojekat</StorageAccount>
   </PublicConfig>
   <PrivateConfig xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration">
-    <StorageAccount name="devstoreaccount1" />
+    <StorageAccount name="cloudprojekat" key="vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" endpoint="https://core.windows.net" />
   </PrivateConfig>
   <IsEnabled>true</IsEnabled>
 </DiagnosticsConfiguration>

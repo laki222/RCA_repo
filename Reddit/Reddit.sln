@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthMonitoringService", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthStatusService", "HealthStatusService\HealthStatusService.csproj", "{FB343039-8B8D-4057-9F99-9BBB10311BF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{CE3A6D2C-BCE2-4C17-A262-E870E32877A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FB343039-8B8D-4057-9F99-9BBB10311BF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB343039-8B8D-4057-9F99-9BBB10311BF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB343039-8B8D-4057-9F99-9BBB10311BF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE3A6D2C-BCE2-4C17-A262-E870E32877A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3A6D2C-BCE2-4C17-A262-E870E32877A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3A6D2C-BCE2-4C17-A262-E870E32877A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3A6D2C-BCE2-4C17-A262-E870E32877A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

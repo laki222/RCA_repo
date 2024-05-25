@@ -9,28 +9,35 @@
       </Site>
     </Sites>
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-      <Setting name="DataConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="Endpoint1" protocol="https" port="80" />
+      <InputEndpoint name="RedditService" protocol="tcp" port="8081" />
     </Endpoints>
     <LocalResources>
     </LocalResources>
+    <Certificates>
+    </Certificates>
   </WebRole>
   <WorkerRole name="NotificationService" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-      <Setting name="DataConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="tcp" port="10100" />
+      <InputEndpoint name="Notification" protocol="tcp" port="10100" />
     </Endpoints>
   </WorkerRole>
   <WorkerRole name="HealthMonitoringService" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="HealthMonitoring" protocol="tcp" port="10101" />
+    </Endpoints>
   </WorkerRole>
   <WebRole name="HealthStatusService" vmsize="Standard_D1_v2">
     <Sites>
@@ -41,10 +48,11 @@
       </Site>
     </Sites>
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="8080" />
+      <InputEndpoint name="Endpoint1" protocol="https" port="8080" />
     </Endpoints>
   </WebRole>
 </ServiceDefinition>

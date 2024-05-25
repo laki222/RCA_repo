@@ -18,7 +18,7 @@ namespace RedditService.Repository
         private CloudTable _table;
         public UserDataRepository()
         {
-            _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
+            _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString"));
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             _table = tableClient.GetTableReference("UserTable"); _table.CreateIfNotExists();
         }
@@ -54,9 +54,9 @@ namespace RedditService.Repository
             */
             return userEntity.Result as UserEntity;
 
-           
+
         }
-        
+
         public async Task<UserEntity> GetUserByEmailAsync(string email)
         {
             try
@@ -88,7 +88,7 @@ namespace RedditService.Repository
                 throw;
             }
         }
-        
+
         public async Task<bool> UserExists(string email)
         {
             var retrieveOperation = TableOperation.Retrieve<UserEntity>("User", email);

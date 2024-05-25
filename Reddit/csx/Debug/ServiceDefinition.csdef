@@ -5,10 +5,11 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="8080" localPort="8080" />
+      <InputEndpoint name="Endpoint1" protocol="https" port="8080" localPort="8080" />
     </Endpoints>
     <Certificates />
   </WebRole>
@@ -17,11 +18,12 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
-      <Setting name="DataConnectionString" />
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="80" localPort="80" />
+      <InputEndpoint name="Endpoint1" protocol="https" port="80" localPort="80" />
+      <InputEndpoint name="RedditService" protocol="tcp" port="8081" localPort="8081" />
     </Endpoints>
     <Certificates />
   </WebRole>
@@ -30,9 +32,12 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
-    <Endpoints />
+    <Endpoints>
+      <InputEndpoint name="HealthMonitoring" protocol="tcp" port="10101" localPort="10101" />
+    </Endpoints>
     <Certificates />
   </WorkerRole>
   <WorkerRole name="NotificationService" vmsize="Standard_D1_v2">
@@ -40,11 +45,11 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
-      <Setting name="DataConnectionString" />
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="tcp" port="10100" localPort="10100" />
+      <InputEndpoint name="Notification" protocol="tcp" port="10100" localPort="10100" />
     </Endpoints>
     <Certificates />
   </WorkerRole>

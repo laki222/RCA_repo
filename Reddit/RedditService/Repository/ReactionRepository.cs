@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace RedditService.Repository
 {
-   
+
     public class ReactionRepository
     {
         private CloudStorageAccount _storageAccount;
         private CloudTable _table;
         public ReactionRepository()
         {
-            _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
+            _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString"));
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             //CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             _table = tableClient.GetTableReference("Reactions"); _table.CreateIfNotExists();
@@ -68,9 +68,9 @@ namespace RedditService.Repository
                 entities.AddRange(resultSegment.Results);
             } while (token != null);
 
-            return entities.FindAll(p=>p.SubscribedUser==email && p.Reaction=="UPVOTE");
+            return entities.FindAll(p => p.SubscribedUser == email && p.Reaction == "UPVOTE");
 
-            
+
         }
 
 

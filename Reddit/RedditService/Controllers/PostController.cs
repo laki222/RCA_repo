@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure;
+﻿///PostController
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using RedditService.Models;
@@ -26,7 +27,7 @@ namespace RedditService.Controllers
             _userDataRepository = new UserDataRepository();
             _postRepository = new PostRepository();
 
-            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
+            var storageConnectionString = CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
             var blobClient = storageAccount.CreateCloudBlobClient();

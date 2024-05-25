@@ -1,0 +1,2 @@
+C:\Users\Lazar\Desktop\RCA_repo\AdminTools\obj\Debug\AdminTools.csproj.AssemblyReference.cache
+C:\Users\Lazar\Desktop\RCA_repo\AdminTools\obj\Debug\AdminTools.csproj.CoreCompileInputs.cache

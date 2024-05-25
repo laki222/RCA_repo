@@ -17,7 +17,7 @@ namespace RedditService.Repository
 
         public PostRepository()
         {
-            _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
+            _storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString"));
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             //CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             _table = tableClient.GetTableReference("Posts"); _table.CreateIfNotExists();
@@ -36,7 +36,7 @@ namespace RedditService.Repository
                 entities.AddRange(resultSegment.Results);
             } while (token != null);
 
-            return  entities;
+            return entities;
         }
 
         public async Task AddPostAsync(PostEntity post)

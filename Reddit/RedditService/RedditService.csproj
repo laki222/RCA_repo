@@ -344,6 +344,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HealthMonitoring\HealthMonitoringService.cs" />
     <Compile Include="Models\CommentEntity.cs" />
     <Compile Include="Models\PostEntity.cs" />
     <Compile Include="Models\ReactionEntity.cs" />
@@ -464,6 +465,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{ce3a6d2c-bce2-4c17-a262-e870e32877a3}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

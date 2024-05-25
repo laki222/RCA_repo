@@ -1,10 +1,8 @@
-﻿using Azure.Storage.Queues;
-using Microsoft.Azure;
+﻿using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
-using Newtonsoft.Json;
 using RedditService.Models;
 using RedditService.Repository;
 using System;
@@ -12,14 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
-
-
-
 
 namespace RedditService.Controllers
 {
@@ -30,10 +24,6 @@ namespace RedditService.Controllers
         private readonly UserDataRepository _userDataRepository;
         private readonly CommentRepository _commentRepository;
         private readonly ReactionRepository _reactionRepository;
-        private const string ServiceBusConnectionString = "DataConnectionString";
-        private const string QueueName = "notifications";
-        private static QueueClient queueClient;
-
         private CloudQueue queue;
 
         public FeedController()
@@ -41,11 +31,11 @@ namespace RedditService.Controllers
             _userDataRepository = new UserDataRepository();
             _postRepository = new PostRepository();
             _commentRepository = new CommentRepository();
-            _reactionRepository= new ReactionRepository();
-            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
+            _reactionRepository = new ReactionRepository();
+            var storageConnectionString = CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
-          
+
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
 
             queue = queueClient.GetQueueReference("notifications");
@@ -53,11 +43,10 @@ namespace RedditService.Controllers
             // Create the queue if it doesn't already exist
             queue.CreateIfNotExistsAsync().Wait();
 
-
             var blobClient = storageAccount.CreateCloudBlobClient();
             blobContainer = blobClient.GetContainerReference("postimages");
             blobContainer.CreateIfNotExists();
-            blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }).Wait();
+            //blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }).Wait();
 
 
         }
@@ -224,7 +213,6 @@ namespace RedditService.Controllers
                     // Add the comment entity to the repository
                     await _commentRepository.AddCommentAsync(commentEntity);
 
-
                     string messageText = Newtonsoft.Json.JsonConvert.SerializeObject(commentEntity);
 
                     // Create a new queue message
@@ -234,8 +222,8 @@ namespace RedditService.Controllers
                     await queue.AddMessageAsync(message);
 
 
-
                     List<CommentEntity> list = new List<CommentEntity>();
+
                     list = await _commentRepository.RetrieveAllComments();
                     List<PostEntity> listpost = new List<PostEntity>();
                     listpost = await _postRepository.RetrieveAllPosts();
@@ -259,14 +247,14 @@ namespace RedditService.Controllers
         [HttpPost]
         public async Task<ActionResult> DeleteComment(string commentId)
         {
-            
+
             var comment = await _commentRepository.GetComment(commentId);
             await _commentRepository.DeleteCommentAsync(comment);
 
             return RedirectToAction("Index");
         }
 
-         [HttpGet]
+        [HttpGet]
         public async Task<ActionResult> Search(string titleFilter, int page = 1, int pageSize = 3)
         {
             ViewBag.IsUserLoggedIn = "true";
@@ -275,14 +263,14 @@ namespace RedditService.Controllers
             List<CommentEntity> list = await _commentRepository.RetrieveAllComments();
             List<PostEntity> listpost = await _postRepository.RetrieveAllPosts();
 
-          
+
             ViewBag.Comments = list;
 
 
             if (!string.IsNullOrEmpty(titleFilter))
             {
                 // Filter the posts based on the title containing the input text
-                listpost = listpost.Where(p =>p.IsDeleted==false && p.Title.Contains(titleFilter)).ToList();
+                listpost = listpost.Where(p => p.IsDeleted == false && p.Title.Contains(titleFilter)).ToList();
             }
 
 
@@ -304,7 +292,7 @@ namespace RedditService.Controllers
 
             return View("Index");
 
-         
+
         }
         public async Task<ActionResult> Sort(string sortBy, string sortOrder, int page = 1, int pageSize = 3)
         {
@@ -354,11 +342,11 @@ namespace RedditService.Controllers
             UserEntity user = Session["UserProfile"] as UserEntity;
             List<PostEntity> posts = await _postRepository.RetrieveAllPosts();
 
-            List<PostEntity>UserPostsFilter= new List<PostEntity>();
+            List<PostEntity> UserPostsFilter = new List<PostEntity>();
 
             foreach (PostEntity post in posts)
             {
-                if(post.IsDeleted==false && post.AuthorEmail==user.RowKey)
+                if (post.IsDeleted == false && post.AuthorEmail == user.RowKey)
                 {
                     UserPostsFilter.Add(post);
                 }

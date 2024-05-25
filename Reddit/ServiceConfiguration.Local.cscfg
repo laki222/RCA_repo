@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ServiceConfiguration serviceName="Reddit" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="7" osVersion="*" schemaVersion="2015-04.2.6">
-  <Role name="RedditService">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
-    </ConfigurationSettings>
-  </Role>
-  <Role name="NotificationService">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-		<Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
-	  </ConfigurationSettings>
-  </Role>
-  <Role name="HealthMonitoringService">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-    </ConfigurationSettings>
-  </Role>
-  <Role name="HealthStatusService">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-    </ConfigurationSettings>
-  </Role>
+	<Role name="RedditService">
+		<Instances count="1" />
+		<ConfigurationSettings>
+			<Setting name="DataConnectionStringLocal" value="UseDevelopmentStorage=true" />
+			<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cloudprojekat;AccountKey=vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" />
+		</ConfigurationSettings>
+		<Certificates>
+		</Certificates>
+	</Role>
+	<Role name="NotificationService">
+		<Instances count="1" />
+		<ConfigurationSettings>
+			<Setting name="DataConnectionStringLocal" value="UseDevelopmentStorage=true" />
+			<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cloudprojekat;AccountKey=vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" />
+		</ConfigurationSettings>
+	</Role>
+	<Role name="HealthMonitoringService">
+		<Instances count="1" />
+		<ConfigurationSettings>
+			<Setting name="DataConnectionStringLocal" value="UseDevelopmentStorage=true" />
+			<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cloudprojekat;AccountKey=vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" />
+		</ConfigurationSettings>
+	</Role>
+	<Role name="HealthStatusService">
+		<Instances count="1" />
+		<ConfigurationSettings>
+			<Setting name="DataConnectionStringLocal" value="UseDevelopmentStorage=true" />
+			<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cloudprojekat;AccountKey=vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" />
+		</ConfigurationSettings>
+	</Role>
 </ServiceConfiguration>

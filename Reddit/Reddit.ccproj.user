@@ -3,5 +3,7 @@
   <PropertyGroup>
     <UseIISExpress>True</UseIISExpress>
     <UseEmulatorExpress>True</UseEmulatorExpress>
+    <WebRoleSkipLaunchInBrowser>
+    </WebRoleSkipLaunchInBrowser>
   </PropertyGroup>
 </Project>

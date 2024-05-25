@@ -16,7 +16,7 @@ namespace RedditService.Controllers
     public class ProfileController : Controller
     {
         // GET: Profile
-    
+
         private readonly UserDataRepository _userRepository;
         private readonly CloudBlobContainer _blobContainer;
 
@@ -24,15 +24,15 @@ namespace RedditService.Controllers
         {
             _userRepository = new UserDataRepository();
 
-            var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
-           // var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString"));
+            // var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             var blobClient = storageAccount.CreateCloudBlobClient();
             _blobContainer = blobClient.GetContainerReference("userimages");
             _blobContainer.CreateIfNotExistsAsync().Wait();
-            _blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }).Wait();
+            //_blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }).Wait();
         }
 
-      
+
         [HttpGet]
         public async Task<ActionResult> ViewProfile()
         {
@@ -59,8 +59,8 @@ namespace RedditService.Controllers
                 return RedirectToAction("UserNotFound");
             }
         }
-       
-     
+
+
         [HttpGet]
         public async Task<ActionResult> EditProfile()
         {
@@ -69,16 +69,16 @@ namespace RedditService.Controllers
             var user = this.Session["UserProfile"];
             if (user != null)
             {
-                return View("EditProfile",user);
+                return View("EditProfile", user);
             }
 
             //var user = await _userRepository.GetUserByEmailAsync(userEmail);
-            else 
+            else
             {
                 return View("Login", user);
             }
 
-           
+
         }
 
         [HttpPost]
@@ -89,13 +89,14 @@ namespace RedditService.Controllers
             var sesija = Session["UserProfile"] as UserEntity;
 
             user.RowKey = sesija.RowKey;
-            user.Password= sesija.Password;
+            user.Password = sesija.Password;
 
 
-            if (user != null) {
+            if (user != null)
+            {
 
                 _userRepository.UpdateUser(user);
-                Session["UserProfile"]=user;
+                Session["UserProfile"] = user;
                 return View("Success", user);
             }
             else

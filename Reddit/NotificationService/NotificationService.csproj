@@ -139,6 +139,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HealthMonitoringService.cs" />
     <Compile Include="Models\NotificationLogEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\NotficationRepository.cs" />
@@ -149,6 +150,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{CE3A6D2C-BCE2-4C17-A262-E870E32877A3}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RedditService\RedditService.csproj">
       <Project>{ee370f7b-d402-44b2-9988-0b98a18a5a4c}</Project>
       <Name>RedditService</Name>

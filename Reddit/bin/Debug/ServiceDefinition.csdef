@@ -18,13 +18,15 @@
       </Site>
     </Sites>
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-      <Setting name="DataConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="Endpoint1" protocol="https" port="80" />
+      <InputEndpoint name="RedditService" protocol="tcp" port="8081" />
     </Endpoints>
     <LocalResources></LocalResources>
+    <Certificates></Certificates>
     <Contents>
       <Content destination=".\">
         <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\rcf\Debug\RedditServiceContent\" />
@@ -39,11 +41,11 @@
   </WebRole>
   <WorkerRole name="NotificationService" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-      <Setting name="DataConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="tcp" port="10100" />
+      <InputEndpoint name="Notification" protocol="tcp" port="10100" />
     </Endpoints>
     <Contents>
       <Content destination=".\">
@@ -59,8 +61,12 @@
   </WorkerRole>
   <WorkerRole name="HealthMonitoringService" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="HealthMonitoring" protocol="tcp" port="10101" />
+    </Endpoints>
     <Contents>
       <Content destination=".\">
         <SourceDirectory path="C:\Users\Lazar\Desktop\RCA_repo\Reddit\rcf\Debug\HealthMonitoringServiceContent\" />
@@ -82,10 +88,11 @@
       </Site>
     </Sites>
     <ConfigurationSettings>
+      <Setting name="DataConnectionStringLocal" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="8080" />
+      <InputEndpoint name="Endpoint1" protocol="https" port="8080" />
     </Endpoints>
     <Contents>
       <Content destination=".\">

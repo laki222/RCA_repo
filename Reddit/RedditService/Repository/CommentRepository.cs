@@ -20,7 +20,7 @@ namespace RedditService.Repository
 
         public CommentRepository()
         {
-            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionString");
+            var storageConnectionString = CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString");
             var _storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             _table = tableClient.GetTableReference("Comments"); _table.CreateIfNotExists();

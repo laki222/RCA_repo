@@ -1,9 +1,12 @@
+using Common;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using RedditService.HealthMonitoring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 
 namespace RedditService
 {
@@ -11,8 +14,15 @@ namespace RedditService
     {
         public override bool OnStart()
         {
-            // For information on handling configuration changes
-            // see the MSDN topic at https://go.microsoft.com/fwlink/?LinkId=166357.
+            ServiceHost serviceHost;
+            serviceHost = new ServiceHost(typeof(HealthMonitoringService));
+            NetTcpBinding binding = new NetTcpBinding();
+
+            serviceHost.AddServiceEndpoint(typeof(IHealthMonitoring), binding, new
+           Uri("net.tcp://localhost:8081/HealthMonitoring"));
+
+            serviceHost.Open();
+          
 
             return base.OnStart();
         }
