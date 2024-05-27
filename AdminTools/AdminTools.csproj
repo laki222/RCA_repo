@@ -68,6 +68,10 @@
       <Project>{CE3A6D2C-BCE2-4C17-A262-E870E32877A3}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Reddit\HealthMonitoringService\HealthMonitoringService.csproj">
+      <Project>{56f31b22-2e37-4c54-86bd-66326503551d}</Project>
+      <Name>HealthMonitoringService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

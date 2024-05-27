@@ -32,7 +32,7 @@ namespace RedditService.Controllers
             _postRepository = new PostRepository();
             _commentRepository = new CommentRepository();
             _reactionRepository = new ReactionRepository();
-            var storageConnectionString = CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString");
+            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionStringLocal");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
 

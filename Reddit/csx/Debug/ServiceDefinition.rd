@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Reddit" generation="1" functional="0" release="0" Id="2380a19e-c4cc-4a00-9a95-11d1b541aba0" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Reddit" generation="1" functional="0" release="0" Id="990f8fff-ee3f-4761-95d4-92c35aace286" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="RedditGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -284,29 +284,29 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="0a564c75-e235-4bba-91d0-81ba13bc9982" ref="Microsoft.RedDog.Contract\ServiceContract\RedditContract@ServiceDefinition">
+    <implementation Id="c6d9c14d-7a9d-494f-baf6-d6e93b468a7b" ref="Microsoft.RedDog.Contract\ServiceContract\RedditContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="96215d72-3dae-42b8-b19c-a818a51c206a" ref="Microsoft.RedDog.Contract\Interface\HealthMonitoringService:HealthMonitoring@ServiceDefinition">
+        <interfaceReference Id="713fc0ad-0375-486c-94d8-74ab4f8d970b" ref="Microsoft.RedDog.Contract\Interface\HealthMonitoringService:HealthMonitoring@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/HealthMonitoringService:HealthMonitoring" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="3e5b7382-b4f9-4237-951f-5f92255bcb21" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="19aa14bd-1c6c-44ea-a459-7bcda2cb72c7" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/HealthStatusService:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="e7df2db5-a0f7-4722-a924-e075607761c8" ref="Microsoft.RedDog.Contract\Interface\NotificationService:Notification@ServiceDefinition">
+        <interfaceReference Id="ef79989b-c3a5-4834-a24c-54b6ecf1ebe2" ref="Microsoft.RedDog.Contract\Interface\NotificationService:Notification@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/NotificationService:Notification" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="7d2281c2-5c2a-42ee-9ec1-88d2d42e14a3" ref="Microsoft.RedDog.Contract\Interface\RedditService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="ae84bddd-0d80-4cfc-a4df-1e596492c743" ref="Microsoft.RedDog.Contract\Interface\RedditService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/RedditService:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="c5828559-adab-4565-a776-1a4d18599f43" ref="Microsoft.RedDog.Contract\Interface\RedditService:RedditService@ServiceDefinition">
+        <interfaceReference Id="26f1dc5b-1544-47e8-81ff-dd9f44d02cff" ref="Microsoft.RedDog.Contract\Interface\RedditService:RedditService@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Reddit/RedditGroup/RedditService:RedditService" />
           </inPort>

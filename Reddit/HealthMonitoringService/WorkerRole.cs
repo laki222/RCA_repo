@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 using Common;
 using HealthMonitoringService.Model;
 using HealthMonitoringService.Repository;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
+using PostmarkDotNet;
 
 
 
@@ -23,12 +26,19 @@ namespace JobWorker
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
         private readonly HealthCheckRepository checkRepository=new HealthCheckRepository();
-
-
+        private readonly AdminRepository adminRepository=new AdminRepository();
+        private CloudQueue queue;
         public override void Run()
         {
-            
+            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionStringLocal");
+            var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+            queue = queueClient.GetQueueReference("admins");
+
+            // Create the queue if it doesn't already exist
+            queue.CreateIfNotExistsAsync().Wait();
             Trace.TraceInformation("JobWorker is running");
 
             try
@@ -45,7 +55,7 @@ namespace JobWorker
         {
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
-
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             // For information on handling configuration changes
             // see the MSDN topic at https://go.microsoft.com/fwlink/?LinkId=166357.
 
@@ -106,6 +116,8 @@ namespace JobWorker
                 {
                     HealthCheckEntity healthCheck = new HealthCheckEntity("NOT OK", DateTime.Now, "reddit");
                     await LogToTable(healthCheck);
+                    await SendEmailsAsync("reddit");
+
                     Trace.TraceWarning("Service not alive anymore!");
                 }
                 try
@@ -119,6 +131,7 @@ namespace JobWorker
                 {
                     HealthCheckEntity healthCheck = new HealthCheckEntity("NOT OK", DateTime.Now, "notification");
                     await LogToTable(healthCheck);
+                    await SendEmailsAsync("notification");
                     Trace.TraceWarning("Service not alive anymore!");
                 }
 
@@ -131,6 +144,20 @@ namespace JobWorker
         private async Task LogToTable(HealthCheckEntity healthCheck)
         {
            await checkRepository.AddCheckAsync(healthCheck);
+
+        }
+
+        public async Task SendEmailsAsync(string type)
+        {
+            foreach (var item in adminRepository.ReadAdmins())
+            {
+
+                // Create a new queue message
+                CloudQueueMessage message = new CloudQueueMessage(item) ;
+
+            // Add the message to the queue
+            await queue.AddMessageAsync(message);
+            }
 
         }
 

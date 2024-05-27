@@ -13,7 +13,7 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="DataConnectionStringLocal" value="UseDevelopmentStorage=true" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cloudprojekat;AccountKey=vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
     <Certificates></Certificates>
   </Role>
@@ -21,21 +21,21 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="DataConnectionStringLocal" value="UseDevelopmentStorage=true" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cloudprojekat;AccountKey=vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>
   <Role name="HealthMonitoringService">
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="DataConnectionStringLocal" value="UseDevelopmentStorage=true" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cloudprojekat;AccountKey=vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>
   <Role name="HealthStatusService">
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="DataConnectionStringLocal" value="UseDevelopmentStorage=true" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=cloudprojekat;AccountKey=vwtXRnG7VWT0L3Dl6wBIwSWbOv91HzphoDDTRn27xmJl+JB0asd/54IqXn43gDEWFyok+3cjlNaz+AStMTUDsg==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

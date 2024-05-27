@@ -17,7 +17,7 @@ namespace HealthMonitoringService.Repository
 
         public HealthCheckRepository()
         {
-            var storageConnectionString = CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString");
+            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionStringLocal");
             var _storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             _table = tableClient.GetTableReference("HealthCheck"); _table.CreateIfNotExists();

@@ -22,6 +22,7 @@ using RedditService.Repository;
 using RedditService.HealthMonitoring;
 using System.ServiceModel;
 using Common;
+using PostmarkDotNet;
 
 
 namespace NotificationService
@@ -38,7 +39,7 @@ namespace NotificationService
         private const string SendGridApiKey = "YourSendGridApiKey";
         // private readonly CommentRepository commentRepository=new CommentRepository();
         private CloudQueue queue;
-      
+        private CloudQueue queueAdmins;
 
         public override void Run()
         {
@@ -59,14 +60,22 @@ namespace NotificationService
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             // Initialize the queue client
-            var storageConnectionString = CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString");
+            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionStringLocal");
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
             queue = queueClient.GetQueueReference("notifications");
 
             // Create the queue if it doesn't already exist
             queue.CreateIfNotExists();
+            CloudQueueClient queueClientAdmin = storageAccount.CreateCloudQueueClient();
+
+            queueAdmins = queueClientAdmin.GetQueueReference("admins");
+            queueAdmins.CreateIfNotExists();
+
+
 
             ServiceHost serviceHost;
             serviceHost = new ServiceHost(typeof(HealthMonitoringService));
@@ -100,6 +109,26 @@ namespace NotificationService
             while (!cancellationToken.IsCancellationRequested)
             {
                 CloudQueueMessage message = await queue.GetMessageAsync();
+                CloudQueueMessage messageAdmin = await queueAdmins.GetMessageAsync();
+                if (messageAdmin != null)
+                {
+                    try
+                    {
+
+                       
+
+
+                        SendEmailsAdminsAsync(messageAdmin.AsString);
+
+                        await queueAdmins.DeleteMessageAsync(messageAdmin.Id, messageAdmin.PopReceipt);
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.TraceError("Error processing message: {0}", ex.Message);
+
+                    }
+                }
+
                 if (message != null)
                 {
                     try
@@ -124,7 +153,7 @@ namespace NotificationService
         private async Task ProcessMessageAsync(CommentEntity comment)
         {
             //CommentEntity comment=await commentRepository.GetComment(commentId);
-            var storageConnectionString = CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString");
+            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionStringLocal");
             var _storageAccount = CloudStorageAccount.Parse(storageConnectionString);
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
 
@@ -152,28 +181,46 @@ namespace NotificationService
             await notificationLog.ExecuteAsync(TableOperation.Insert(logEntity));
         }
 
-      
 
-        private async Task SendEmailsAsync(List<ReactionEntity> emails, string commentText)
+
+        public async Task SendEmailsAsync(List<ReactionEntity> emails, string commentText)
         {
            
+            var client = new PostmarkClient("7cc441a8-8816-4664-93a5-9e10833ecc0b");
+
             foreach (var email in emails)
             {
-                var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-                var client = new SendGridClient("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");
-                var from = new EmailAddress("123copa123@gmail.com", "Example User");
-                var subject = "Sending with SendGrid is Fun";
-                var to = new EmailAddress(email.SubscribedUser, "Example User");
-                var plainTextContent = "and easy to do anywhere, even with C#";
-                var htmlContent = "<strong>"+commentText+"</strong>";
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-                var response = await client.SendEmailAsync(msg);
-                var straa = "";
-                Trace.TraceInformation($"Email sent to {email} with status {response.StatusCode}");
+                var message = new PostmarkMessage
+                {
+                    From = "brankovic.pr121.2020@uns.ac.rs",
+                    To = email.SubscribedUser,
+                    Subject = "New Comment",
+                    TextBody = commentText,
+                };
+
+                var response = await client.SendMessageAsync(message);
+                Trace.TraceInformation($"Email sent to {email.SubscribedUser} with status {response.Status}");
             }
         }
 
-       
-       
+        public void SendEmailsAdminsAsync(string email)
+        {
+
+            var client = new PostmarkClient("7cc441a8-8816-4664-93a5-9e10833ecc0b");
+
+           
+                var message = new PostmarkMessage
+                {
+                    From = "brankovic.pr121.2020@uns.ac.rs",
+                    To = email,
+                    Subject = "PROBLEM",
+                    TextBody = "DOWN",
+                };
+
+                var response =  client.SendMessageAsync(message);
+               
+            
+        }
+
     }
 }

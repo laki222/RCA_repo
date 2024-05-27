@@ -131,3 +131,4 @@ C:\Users\Lazar\Desktop\RCA_repo\Reddit\NotificationService\obj\Debug\Notificatio
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\NotificationService\obj\Debug\NotificationService.csproj.CopyComplete
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\NotificationService\obj\Debug\NotificationService.dll
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\NotificationService\obj\Debug\NotificationService.pdb
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\NotificationService\bin\Debug\Postmark.dll

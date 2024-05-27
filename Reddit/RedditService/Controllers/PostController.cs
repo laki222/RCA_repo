@@ -27,7 +27,7 @@ namespace RedditService.Controllers
             _userDataRepository = new UserDataRepository();
             _postRepository = new PostRepository();
 
-            var storageConnectionString = CloudConfigurationManager.GetSetting("Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString");
+            var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionStringLocal");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
             var blobClient = storageAccount.CreateCloudBlobClient();
