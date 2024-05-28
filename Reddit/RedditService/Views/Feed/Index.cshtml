@@ -5,6 +5,9 @@
     var clickedPostRowKey = ViewBag.ClickedPostRowKey;
     var EmailOwnerPost = ViewBag.EmailOwnerPost;
     var react = ViewBag.react;
+    var currentSortBy = ViewBag.CurrentSortBy ?? "";
+    var currentSortOrder = ViewBag.CurrentSortOrder ?? "";
+    var titleFilter = ViewBag.TitleFilter ?? "";
 }
 
 <script src="https://use.fontawesome.com/2903eb4599.js"></script>
@@ -20,23 +23,26 @@
 </div>
 
 <h1>SEARCH</h1>
-<form action="@Url.Action("Search", "Feed")" method="get" style="display:inline;">
-    <input type="text" name="titleFilter" />
+<form action="@Url.Action("Sort", "Feed")" method="get" style="display:inline;">
+    <input type="text" name="titleFilter" value="@titleFilter" />
     <button type="submit">
         <i class="fa fa-search" style="font-size: 1.2em;"></i>
     </button>
+    <input type="hidden" name="sortBy" value="@currentSortBy" />
+    <input type="hidden" name="sortOrder" value="@currentSortOrder" />
 </form>
 
 <form action="@Url.Action("Sort", "Feed")" method="get" style="display:inline;">
+    <input type="hidden" name="titleFilter" value="@titleFilter" />
     <select name="sortBy">
         <option value="">Sort by</option>
-        <option value="title">Title</option>
-        <option value="upvotes">Upvotes</option>
+        <option value="title" @(currentSortBy == "title" ? "selected" : "")>Title</option>
+        <option value="upvotes" @(currentSortBy == "upvotes" ? "selected" : "")>Upvotes</option>
     </select>
-    <button type="submit" name="sortOrder" value="ascending">
+    <button type="submit" name="sortOrder" value="ascending" @(currentSortOrder == "ascending" ? "selected" : "")>
         <i class="fa fa-arrow-up"></i>
     </button>
-    <button type="submit" name="sortOrder" value="descending">
+    <button type="submit" name="sortOrder" value="descending" @(currentSortOrder == "descending" ? "selected" : "")>
         <i class="fa fa-arrow-down"></i>
     </button>
 </form>
@@ -128,7 +134,7 @@
         <div class="pagination">
             @for (int i = 1; i <= ViewBag.TotalPages; i++)
             {
-                <a href="@Url.Action("Index", new { page = i })" class="@(ViewBag.CurrentPage == i ? "active" : "")">@i</a>
+                <a href="@Url.Action("Sort", new { page = i, sortBy = currentSortBy, sortOrder = currentSortOrder, titleFilter = titleFilter })" class="@(ViewBag.CurrentPage == i ? "active" : "")">@i</a>
             }
         </div>
     </div>

@@ -286,7 +286,7 @@ namespace RedditService.Controllers
             ViewBag.CurrentPage = page;
 
 
-
+            ViewBag.TitleFilter = titleFilter;
             ViewBag.Posts = listpost;
             ViewBag.Comments = await _commentRepository.RetrieveAllComments();
 
@@ -294,21 +294,22 @@ namespace RedditService.Controllers
 
 
         }
-        public async Task<ActionResult> Sort(string sortBy, string sortOrder, int page = 1, int pageSize = 3)
+        public async Task<ActionResult> Sort(string sortBy, string sortOrder, string titleFilter, int page = 1, int pageSize = 3)
         {
             ViewBag.IsUserLoggedIn = "true";
             await Task.Delay(100);
 
             List<PostEntity> posts = await _postRepository.RetrieveAllPosts();
 
+            if (!string.IsNullOrEmpty(titleFilter))
+            {
+                posts = posts.Where(p => p.IsDeleted == false && p.Title.Contains(titleFilter)).ToList();
+            }
+
             if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(sortOrder))
             {
                 posts = SortPosts(posts, sortBy, sortOrder);
-
-                // Toggle the sorting order for the next request
-                TempData["SortOrder"] = sortOrder == "ascending" ? "descending" : "ascending";
             }
-
 
             int totalPosts = posts.Count;
             int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
@@ -321,12 +322,14 @@ namespace RedditService.Controllers
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
 
-
-
-            ViewBag.Posts = posts;
+            // Store the current sortBy, sortOrder, and titleFilter in ViewBag to be used in the view
+            ViewBag.CurrentSortBy = sortBy;
+            ViewBag.CurrentSortOrder = sortOrder;
+            ViewBag.TitleFilter = titleFilter;
 
             return View("Index");
         }
+
 
         private List<PostEntity> SortPosts(List<PostEntity> posts, string sortBy, string sortOrder)
         {
