@@ -309,6 +309,20 @@ namespace RedditService.Controllers
                 TempData["SortOrder"] = sortOrder == "ascending" ? "descending" : "ascending";
             }
 
+
+            int totalPosts = posts.Count;
+            int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
+
+            // Get the posts for the current page
+            List<PostEntity> paginatedPosts = posts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pass paginated posts, total pages, and current page to the view
+            ViewBag.PaginatedPosts = paginatedPosts;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+
+
+
             ViewBag.Posts = posts;
 
             return View("Index");

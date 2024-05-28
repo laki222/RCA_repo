@@ -4,6 +4,11 @@
 
 <!-- Custom CSS for additional styling -->
 <style>
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+    }
+
     .login-container {
         max-width: 400px;
         margin: 50px auto;
@@ -20,19 +25,33 @@
 
     .form-group label {
         font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
     }
 
     .btn-primary, .btn-secondary {
         width: 100%;
-    }
-
-    .btn-secondary {
+        padding: 10px;
         margin-top: 10px;
     }
 
     .message {
         margin-top: 20px;
         color: red;
+        text-align: center;
+    }
+
+    .register-link {
+        display: block;
+        margin-top: 10px;
         text-align: center;
     }
 </style>
@@ -43,19 +62,19 @@
     </div>
     <form asp-action="Login" method="post">
         <div class="form-group">
-            <label asp-for="Email"></label>
+            <label asp-for="Email">Email</label>
             <input type="email" class="form-control" name="email" placeholder="Enter your email" />
         </div>
         <div class="form-group">
-            <label asp-for="Password"></label>
+            <label asp-for="Password">Password</label>
             <input type="password" class="form-control" name="password" placeholder="Enter your password" />
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Login</button>
         </div>
-        <p>
-            @Html.ActionLink("Register", "Register", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
-        </p>
+        <div class="register-link">
+            @Html.ActionLink("Register", "Register", "Home", new { area = "" }, new { @class = "btn btn-secondary" })
+        </div>
         <div class="message">
             @ViewBag.Message
         </div>

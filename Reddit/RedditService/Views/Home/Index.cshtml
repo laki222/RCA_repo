@@ -3,43 +3,52 @@
 }
 
 <main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+    <section class="row" aria-labelledby="projectTitle">
+        <h1 id="projectTitle">Forumski Sistem</h1>
+        <p class="lead">Implementirajte sistem za kreiranje i upravljanje forumski temama i komentarima sa podrškom za notifikacije i proveru dostupnosti servisa.</p>
+        <p><a href="/Home/About" class="btn btn-primary btn-md">Saznaj više &raquo;</a></p>
     </section>
 
-    @{
-        ViewBag.Title = "Home Page";
-    }
-
     <div class="jumbotron">
-        <h1>Welcome to our site!</h1>
-        <p class="lead">Click below to register.</p>
+        <h1>Dobrodošli na naš forum!</h1>
+        <p class="lead">Kliknite ispod da se registrujete.</p>
         <p>
-            @Html.ActionLink("Register", "Register", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+            @Html.ActionLink("Registracija", "Register", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
         </p>
     </div>
 
     <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
+        <section class="col-md-4" aria-labelledby="userActionsTitle">
+            <h2 id="userActionsTitle">Korisničke Akcije</h2>
             <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
+                Korisnički interfejs podržava sledeće akcije:
             </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            <ul>
+                <li>Registracija novog korisnika</li>
+                <li>Logovanje postojećeg korisnika</li>
+                <li>Izmena korisničkog profila</li>
+                <li>Pravljenje nove teme</li>
+                <li>Dodavanje komentara</li>
+                <li>Pretraga i sortiranje tema</li>
+                <li>Brisanje teme ili komentara</li>
+                <li>Upvote / Downvote teme</li>
+            </ul>
         </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+        <section class="col-md-4" aria-labelledby="notificationServiceTitle">
+            <h2 id="notificationServiceTitle">NotificationService</h2>
+            <p>
+                Servis za slanje mejlova pretplaćenim korisnicima kada se kreira novi komentar na temu.
+                Implementiran kao zaseban servis koji obezbeđuje neometan rad sistema.
+            </p>
         </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+        <section class="col-md-4" aria-labelledby="healthMonitoringTitle">
+            <h2 id="healthMonitoringTitle">HealthMonitoringService</h2>
+            <p>
+                Sistem za proveru dostupnosti RedditService i NotificationService servisa.
+                Učestalo šalje zahteve ka servisima i beleži status u bazu podataka, sa mogućnošću slanja obaveštenja u slučaju problema.
+            </p>
         </section>
     </div>
 </main>
