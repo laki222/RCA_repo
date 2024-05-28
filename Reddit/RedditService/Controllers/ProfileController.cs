@@ -105,7 +105,14 @@ namespace RedditService.Controllers
                 return RedirectToAction("UserNotFound");
             }
         }
+        public async Task<ActionResult> Logout()
+        {
+            await Task.Delay(100);
+            ViewBag.IsUserLoggedIn = "false";
+            Session["UserProfile"] =null;
 
+            return RedirectToAction("Index", "Home");
+        }
 
 
     }

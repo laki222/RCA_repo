@@ -440,6 +440,67 @@ namespace RedditService.Controllers
             return View("MyPosts");
         }
 
+        public async Task<ActionResult> DownVote(string postId)
+        {
+            ViewBag.IsUserLoggedIn = "true";
+            await Task.Delay(100);
+            UserEntity user = Session["UserProfile"] as UserEntity;
+            List<ReactionEntity> reactions = await _reactionRepository.RetrieveUpVotesByEmail(user.RowKey);
+
+            List<PostEntity> UserPostsUpvoted = new List<PostEntity>();
+
+
+
+
+            foreach (ReactionEntity react in reactions)
+            {
+                if(react.PostId== postId)
+                {
+                    react.Reaction = "DOWNVOTE";
+                    PostEntity post =await _postRepository.GetPostAsync(react.PostId);
+                    post.Upvotes = post.Upvotes - 1;
+                    post.Downvotes = post.Downvotes + 1;
+                    await _postRepository.UpdatePostAsync(post);
+                    await _reactionRepository.UpdateReactionAsync(react);
+                }
+                else
+                {
+                    UserPostsUpvoted.Add(await _postRepository.GetPostAsync(react.PostId));
+                }
+
+                
+            }
+            List<PostEntity> posts = await _postRepository.RetrieveAllPosts();
+            List<PostEntity> UserPostsFilter = new List<PostEntity>();
+
+            foreach (PostEntity post in posts)
+            {
+                if (post.IsDeleted == false && post.AuthorEmail == user.RowKey)
+                {
+                    UserPostsFilter.Add(post);
+                }
+            }
+
+            ViewBag.UserPosts = UserPostsFilter;
+            ViewBag.UpVoted = UserPostsUpvoted;
+
+            return View("MyPosts");
+        }
+
+        public async Task<ActionResult>Details(string id)
+        {
+            ViewBag.IsUserLoggedIn = "true";
+            PostEntity post = await _postRepository.GetPostAsync(id);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.details = post;
+
+            return View("Post");
+        }
+
 
     }
 }

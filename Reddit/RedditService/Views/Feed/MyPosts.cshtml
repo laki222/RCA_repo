@@ -2,7 +2,8 @@
     List<RedditService.Models.PostEntity> UserPosts = ViewBag.UserPosts;
     List<RedditService.Models.PostEntity> UpVotedPosts = ViewBag.UpVoted;
 }
-
+<script src="https://use.fontawesome.com/2903eb4599.js"></script>
+<link href="~/Content/Feed.css" rel="stylesheet" type="text/css" />
 <h2>MyPosts</h2>
 
 @if (UserPosts != null && UserPosts.Count > 0)
@@ -18,7 +19,9 @@
             @foreach (var post in UserPosts)
             {
                 <tr>
-                    <td>@post.Title</td>
+                    <td>
+                        @Html.ActionLink(post.Title, "Details", "Feed", new { id = post.RowKey }, null)
+                    </td>
                     <td>
                         <form action="@Url.Action("DeletePost", "Feed")" method="post" style="display:inline;">
                             <input type="hidden" name="postId" value="@post.RowKey" />
@@ -51,12 +54,14 @@ else
             @foreach (var post in UpVotedPosts)
             {
                 <tr>
-                    <td>@post.Title</td>
+                    <td>
+                        @Html.ActionLink(post.Title, "Details", "Feed", new { id = post.RowKey }, null)
+                    </td>
                     <td>
                         <form action="@Url.Action("DownVote", "Feed")" method="post" style="display:inline;">
                             <input type="hidden" name="postId" value="@post.RowKey" />
                             <button type="submit" class="delete-comment">
-                                <i class="fa fa-trash"></i>
+                                <i class="fa fa-thumbs-o-down"></i>
                             </button>
                         </form>
                     </td>
