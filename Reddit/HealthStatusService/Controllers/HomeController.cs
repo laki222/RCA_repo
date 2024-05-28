@@ -1,6 +1,10 @@
-﻿using System;
+﻿using HealthMonitoringService.Model;
+using HealthMonitoringService.Repository;
+using HealthStatusService.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,23 +12,60 @@ namespace HealthStatusService.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly HealthCheckRepository healthCheckRepository=new HealthCheckRepository();
+
+        public async Task<ActionResult> Index()
         {
-            return View();
+            DateTime now = DateTime.UtcNow;
+            DateTime last24Hours = now.AddHours(-24);
+            DateTime lastHour = now.AddHours(-1);
+
+            var last24HoursChecks = await healthCheckRepository.GetHealthChecksAsync(last24Hours);
+            var lastHourChecks = await healthCheckRepository.GetHealthChecksAsync(lastHour);
+
+            var uptimeLast24Hours = CalculateUptime(last24HoursChecks);
+            var uptimeLastHour = CalculateUptime(lastHourChecks);
+            List<string> last24HoursStatuses = new List<string>();
+            List<string> lastHourStatuses = new List<string>();
+            
+            foreach (var item in last24HoursChecks)
+            {
+                
+                    last24HoursStatuses.Add(item.Status);
+               
+                   
+                
+
+            }
+            foreach (var item in lastHourChecks)
+            {
+
+                lastHourStatuses.Add(item.Status);
+
+              
+
+            }
+
+
+            var model = new HealthStatus
+            {
+                UptimeLast24Hours = uptimeLast24Hours,
+                UptimeLastHour = uptimeLastHour,
+                Last24HoursStatuses = last24HoursStatuses,
+                LastHourStatuses = lastHourStatuses
+            };
+
+            return View(model);
         }
 
-        public ActionResult About()
+        private double CalculateUptime(List<HealthCheckEntity> healthChecks)
         {
-            ViewBag.Message = "Your application description page.";
+            if (healthChecks == null || !healthChecks.Any()) return 0;
 
-            return View();
-        }
+            int totalChecks = healthChecks.Count;
+            int availableChecks = healthChecks.Count(hc => hc.Status == "OK");
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return (double)availableChecks / totalChecks * 100;
         }
     }
 }

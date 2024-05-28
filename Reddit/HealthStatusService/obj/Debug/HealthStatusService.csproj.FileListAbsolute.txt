@@ -483,3 +483,15 @@ C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\obj\Debug\HealthStatu
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\obj\Debug\HealthStatusService.csproj.CopyComplete
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\obj\Debug\HealthStatusService.dll
 C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\obj\Debug\HealthStatusService.pdb
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\HealthMonitoringService.dll
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Microsoft.WindowsAzure.Storage.dll
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Common.dll
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Microsoft.WindowsAzure.Configuration.dll
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Microsoft.Azure.KeyVault.Core.dll
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\HealthMonitoringService.pdb
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\HealthMonitoringService.dll.config
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Microsoft.WindowsAzure.Storage.pdb
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Microsoft.WindowsAzure.Storage.xml
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Common.pdb
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Microsoft.WindowsAzure.Configuration.xml
+C:\Users\Lazar\Desktop\RCA_repo\Reddit\HealthStatusService\bin\Microsoft.Azure.KeyVault.Core.xml
