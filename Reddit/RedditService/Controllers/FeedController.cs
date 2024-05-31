@@ -9,6 +9,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -35,6 +37,9 @@ namespace RedditService.Controllers
             var storageConnectionString = CloudConfigurationManager.GetSetting("DataConnectionStringLocal");
             var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
+          
+
+
 
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
 
@@ -59,8 +64,10 @@ namespace RedditService.Controllers
             await Task.Delay(100);
 
             // Retrieve all posts
-            List<PostEntity> list = await _postRepository.RetrieveAllPosts();
-            List<PostEntity> filteredPosts = list.Where(post => !post.IsDeleted).ToList();
+          
+            List<PostEntity> listUpdated = await _postRepository.RetrieveAllPosts();
+
+            List<PostEntity> filteredPosts = listUpdated.Where(post => !post.IsDeleted).ToList();
             // Get the current user's email
             UserEntity currentUser = Session["UserProfile"] as UserEntity;
             ViewBag.EmailOwnerPost = currentUser?.RowKey;
@@ -68,13 +75,13 @@ namespace RedditService.Controllers
             // Calculate total number of pages
             int totalPosts = filteredPosts.Count;
             int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
-
+            List<CommentEntity> listComments = await _commentRepository.RetrieveAllComments();
 
 
 
             // Get the posts for the current page
             List<PostEntity> paginatedPosts = filteredPosts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+            ViewBag.Comments = listComments;
             // Pass paginated posts, total pages, and current page to the view
             ViewBag.PaginatedPosts = paginatedPosts;
             ViewBag.TotalPages = totalPages;
@@ -152,7 +159,7 @@ namespace RedditService.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Comments(string rowkey, int page = 1, int pageSize = 3)
+        public async Task<ActionResult> Comments(string rowkey, int page , int pageSize = 3,string sortBy="",string sortOrder="",string titleFilter="")
         {
             ViewBag.IsUserLoggedIn = "true";
             await Task.Delay(100);
@@ -167,34 +174,42 @@ namespace RedditService.Controllers
             ViewBag.EmailOwnerPost = test.RowKey;
             var previousRowKey = TempData["ClickedPostRowKey"] as string;
 
-            if (previousRowKey == rowkey)
+            // Find the post by rowkey
+            PostEntity clickedPost = listpost.FirstOrDefault(post => post.RowKey == rowkey);
+            if (clickedPost != null)
             {
-                ViewBag.ButtonClick = null;
-                ViewBag.ClickedPostRowKey = null;
-            }
-            else
-            {
-                ViewBag.ButtonClick = "clicked";
-                ViewBag.ClickedPostRowKey = rowkey;
+                // Toggle the commentOpen property
+                clickedPost.CommentsOpen = (previousRowKey == rowkey) ? !clickedPost.CommentsOpen : true;
+                await _postRepository.UpdatePostAsync(clickedPost);
             }
 
-            TempData["ClickedPostRowKey"] = ViewBag.ClickedPostRowKey;
-            int totalPosts = filteredPosts.Count;
+            // Save the rowkey of the clicked post to TempData for the next request
+            TempData["ClickedPostRowKey"] = rowkey;
+
+            List<PostEntity> listpostUpdate = await _postRepository.RetrieveAllPosts();
+            List<PostEntity> filteredPostsUpdate = listpostUpdate.Where(post => !post.IsDeleted).ToList();
+
+
+
+            int totalPosts = filteredPostsUpdate.Count;
             int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
 
             // Get the posts for the current page
-            List<PostEntity> paginatedPosts = filteredPosts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+            List<PostEntity> paginatedPosts = filteredPostsUpdate.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            int startIndex = (page - 1) * pageSize;
+            int currentPage = (startIndex / pageSize) + 1;
             // Pass paginated posts, total pages, and current page to the view
             ViewBag.PaginatedPosts = paginatedPosts;
             ViewBag.TotalPages = totalPages;
-            ViewBag.CurrentPage = page;
-            return View("Index");
+            ViewBag.CurrentPage = currentPage;
+
+            return Redirect($"?page={currentPage}&pageSize={pageSize}&sortBy={sortBy}&sortOrder={sortOrder}&titleFilter={titleFilter}");
+
         }
 
 
         [HttpPost]
-        public async Task<ActionResult> AddComment(string postId, string content)
+        public async Task<ActionResult> AddComment(string postId, string content, int page, int pageSize = 3, string sortBy = "", string sortOrder = "", string titleFilter = "")
         {
             UserEntity test = Session["UserProfile"] as UserEntity;
 
@@ -231,27 +246,61 @@ namespace RedditService.Controllers
                     ViewBag.Comments = list;
                     ViewBag.ButtonClick = "clicked";
 
-                    // Redirect to a page displaying the post or any other page
-                    return RedirectToAction("Index");
+                    int totalPosts = listpost.Count;
+                    int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
+
+                    // Get the posts for the current page
+                    List<PostEntity> paginatedPosts = listpost.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    int startIndex = (page - 1) * pageSize;
+                    int currentPage = (startIndex / pageSize) + 1;
+                    // Pass paginated posts, total pages, and current page to the view
+                    ViewBag.PaginatedPosts = paginatedPosts;
+                    ViewBag.TotalPages = totalPages;
+                    ViewBag.CurrentPage = currentPage;
+
+
+
+                    // If model state is not valid or if an error occurred, return to the view
+                    return Redirect($"?page={currentPage}&pageSize={pageSize}&sortBy={sortBy}&sortOrder={sortOrder}&titleFilter={titleFilter}");
                 }
                 catch
                 {
                     ModelState.AddModelError(string.Empty, "An error occurred while adding the comment.");
                 }
             }
-            // If model state is not valid or if an error occurred, return to the view
             return View();
+          
         }
 
 
         [HttpPost]
-        public async Task<ActionResult> DeleteComment(string commentId)
+        public async Task<ActionResult> DeleteComment(string commentId,int page, int pageSize = 3, string sortBy = "", string sortOrder = "", string titleFilter = "")
         {
-
+            List<PostEntity> listpost = await _postRepository.RetrieveAllPosts();
             var comment = await _commentRepository.GetComment(commentId);
             await _commentRepository.DeleteCommentAsync(comment);
 
-            return RedirectToAction("Index");
+            int totalPosts = listpost.Count;
+            int totalPages = (int)Math.Ceiling((decimal)totalPosts / pageSize);
+
+            // Get the posts for the current page
+            List<PostEntity> paginatedPosts = listpost.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            int startIndex = (page - 1) * pageSize;
+            int currentPage = (startIndex / pageSize) + 1;
+            // Pass paginated posts, total pages, and current page to the view
+            ViewBag.PaginatedPosts = paginatedPosts;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = currentPage;
+
+
+
+            // If model state is not valid or if an error occurred, return to the view
+            return Redirect($"?page={currentPage}&pageSize={pageSize}&sortBy={sortBy}&sortOrder={sortOrder}&titleFilter={titleFilter}");
+
+
+
+
+
         }
 
         [HttpGet]

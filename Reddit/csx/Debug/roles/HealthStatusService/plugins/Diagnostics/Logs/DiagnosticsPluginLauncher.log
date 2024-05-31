@@ -1,15 +1,15 @@
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:20 PM] Emulator config file set to C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthStatusService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] DiagnosticsStoreRootPath set to: C:\Users\Lazar\AppData\Local\dftmp\Resources\992edb90-0364-43e9-af37-61b76ea6828c
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Loading config file: C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthStatusService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Config file to read: C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthStatusService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Checking VM Type
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Emulator config file set to C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthStatusService\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Extension set to Emulator Mode
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Reading XML configuration file
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Bypassing private config decryption
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Stopping the running plugin, if any
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] No DiagnosticsPlugin is running.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Killing any DiagnosticsPlugin that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Killing any MonAgentHost that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Diagnostics plugin stopped successfully
-DiagnosticsPluginLauncher.exe Information: 0 : [5/28/2024 5:54:21 PM] Resetting DiagnosticPlugin
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Emulator config file set to C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthStatusService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] DiagnosticsStoreRootPath set to: C:\Users\Lazar\AppData\Local\dftmp\Resources\33459e7d-2101-4712-ad10-2981f7e6c8fd
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Loading config file: C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthStatusService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Config file to read: C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthStatusService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Checking VM Type
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Emulator config file set to C:\Users\Lazar\Desktop\RCA_repo\Reddit\csx\Debug\roles\HealthStatusService\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Extension set to Emulator Mode
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Reading XML configuration file
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Bypassing private config decryption
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Stopping the running plugin, if any
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] No DiagnosticsPlugin is running.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Killing any DiagnosticsPlugin that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Killing any MonAgentHost that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Diagnostics plugin stopped successfully
+DiagnosticsPluginLauncher.exe Information: 0 : [5/31/2024 1:41:22 PM] Resetting DiagnosticPlugin

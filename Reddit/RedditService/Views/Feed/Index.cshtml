@@ -1,6 +1,7 @@
 ﻿@{
     List<RedditService.Models.PostEntity> posts = ViewBag.Posts;
     List<RedditService.Models.CommentEntity> comments = ViewBag.Comments;
+    int currentPage = ViewBag.CurrentPage ?? 1;
     var klik = ViewBag.ButtonClick;
     var clickedPostRowKey = ViewBag.ClickedPostRowKey;
     var EmailOwnerPost = ViewBag.EmailOwnerPost;
@@ -84,6 +85,7 @@
                         </div>
                         <form action="@Url.Action("Comments", "Feed")" method="get" style="display:inline;">
                             <input type="hidden" name="rowkey" value="@p.RowKey" />
+                            <input type="hidden" name="page" value="@currentPage" />
                             <a href="#" onclick="this.closest('form').submit(); return false;">
                                 <i class="fa fa-comments-o"></i>
                             </a>
@@ -91,7 +93,7 @@
                     </div>
                 </div>
 
-                @if (klik == "clicked" && clickedPostRowKey == p.RowKey)
+                @if (p.CommentsOpen)
                 {
                     <h1>Comments</h1>
                     foreach (var c in comments)
@@ -105,6 +107,7 @@
                                 {
                                     <form action="@Url.Action("DeleteComment", "Feed")" method="post" style="display:inline;">
                                         <input type="hidden" name="commentId" value="@c.RowKey" />
+                                        <input type="hidden" name="page" value="@currentPage" />
                                         <button type="submit" class="delete-comment">
                                             <i class="fa fa-trash"></i>
                                         </button>
@@ -117,6 +120,7 @@
                         <h5>Leave a comment</h5>
                         <form action="@Url.Action("AddComment", "Feed")" method="post" class="comment-form">
                             <input type="hidden" name="postId" value="@p.RowKey" />
+                            <input type="hidden" name="page" value="@currentPage" />
                             <textarea name="content" placeholder="Add a comment..."></textarea>
                             <button type="submit">Submit</button>
                         </form>
@@ -134,7 +138,7 @@
         <div class="pagination">
             @for (int i = 1; i <= ViewBag.TotalPages; i++)
             {
-                <a href="@Url.Action("Sort", new { page = i, sortBy = currentSortBy, sortOrder = currentSortOrder, titleFilter = titleFilter })" class="@(ViewBag.CurrentPage == i ? "active" : "")">@i</a>
+                <a href="?page=@i&sortBy=@currentSortBy&sortOrder=@currentSortOrder&titleFilter=@titleFilter" class="@(ViewBag.CurrentPage == i ? "active" : "")">@i</a>
             }
         </div>
     </div>

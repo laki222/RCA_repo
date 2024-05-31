@@ -3,6 +3,8 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using RedditService.HealthMonitoring;
+using RedditService.Models;
+using RedditService.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +28,28 @@ namespace RedditService
 
             return base.OnStart();
         }
+
+
+        public override async void OnStop()
+        {
+           PostRepository postRepository = new PostRepository();
+            
+            
+                // Primer: Postavljanje vrednosti u bazi
+               
+                    List<PostEntity> entities =await postRepository.RetrieveAllPosts();
+                    foreach (var entity in entities)
+                    {
+                        entity.CommentsOpen = false;
+                        await postRepository.UpdatePostAsync(entity);
+                    }
+                  
+                
+            
+
+            base.OnStop();
+        }
+
+
     }
 }
