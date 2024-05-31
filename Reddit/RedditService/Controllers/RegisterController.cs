@@ -85,8 +85,10 @@ namespace RedditService.Controllers
                     await _userDataRepository.AddUser(userEntity);
                     stopwatch.Stop();
                     Trace.WriteLine($"Table insertion took {stopwatch.ElapsedMilliseconds} ms");
+                    ViewBag.IsUserLoggedIn = "true";
+                    Session["UserProfile"] = userEntity;
 
-                    return View("Success", model);
+                    return RedirectToAction("ViewProfile", "Profile");
                 }
                 catch (Exception ex)
                 {

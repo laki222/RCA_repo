@@ -92,8 +92,8 @@
                         </form>
                     </div>
                 </div>
-
-                @if (p.CommentsOpen)
+                
+                @if (p.CommentsOpen && comments!=null)
                 {
                     <h1>Comments</h1>
                     foreach (var c in comments)

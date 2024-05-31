@@ -23,6 +23,7 @@ using RedditService.HealthMonitoring;
 using System.ServiceModel;
 using Common;
 using PostmarkDotNet;
+using NotificationService.Repository;
 
 
 namespace NotificationService
@@ -32,8 +33,8 @@ namespace NotificationService
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
         private QueueClient queueClient;
+        private readonly NotficationRepository notficationRepository = new NotficationRepository();
 
-      
         private const string QueueName = "test";
         private const string StorageConnectionString = "DataConnectionString";
         private const string SendGridApiKey = "YourSendGridApiKey";
@@ -74,6 +75,10 @@ namespace NotificationService
 
             queueAdmins = queueClientAdmin.GetQueueReference("admins");
             queueAdmins.CreateIfNotExists();
+
+
+           
+
 
 
 
@@ -169,7 +174,7 @@ namespace NotificationService
             await SendEmailsAsync(emails, comment.Content);
 
             // Log the notification details
-            var notificationLog = tableClient.GetTableReference("NotificationLog");
+            
             var logEntity = new NotificationLogEntity
             {
                 PartitionKey = "NotificationLog",
@@ -178,7 +183,11 @@ namespace NotificationService
                 CommentId = comment.RowKey,
                 EmailCount = emails.Count
             };
-            await notificationLog.ExecuteAsync(TableOperation.Insert(logEntity));
+
+            await notficationRepository.AddLogAsync(logEntity);
+
+
+          
         }
 
 
